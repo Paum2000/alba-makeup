@@ -19,22 +19,22 @@ export default function App() {
   const [textos, setTextos] = useState({});
 
   useEffect(() => {
-    // 1. URLs correctas de las 3 pestañas de tu Google Sheet
+    // URLs correctas del Google Sheet
     const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=0&single=true&output=csv"; 
     const SERVICIOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=1&single=true&output=csv";
     const TEXTOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=2&single=true&output=csv"; 
 
-    // 2. Cargar Portfolio
+    // Cargar Portfolio
     fetch(PORTFOLIO_CSV_URL)
       .then(res => res.text())
       .then(csv => Papa.parse(csv, { header: true, complete: (results) => setPortfolioData(results.data) }));
 
-    // 3. Cargar Servicios
+    // Cargar Servicios
     fetch(SERVICIOS_CSV_URL)
       .then(res => res.text())
       .then(csv => Papa.parse(csv, { header: true, complete: (results) => setServicesData(results.data) }));
 
-    // 4. Cargar Textos Web
+    // Cargar Textos Web
     fetch(TEXTOS_CSV_URL)
       .then(res => res.text())
       .then(csv => {
@@ -55,7 +55,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F9F6F0] font-sans text-[#2C1E16]">
-      {/* Header / Navbar - Estilo Luxury */}
+      {/* Header / Navbar */}
       <header className="fixed w-full top-0 z-50 bg-[#F9F6F0]/90 backdrop-blur-md border-b border-[#EBDDD5]">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="text-2xl font-serif text-[#59111E] font-light tracking-[0.2em] uppercase">
@@ -84,13 +84,13 @@ export default function App() {
         )}
       </header>
 
-      {/* Hero Section - Glamour Edition */}
-      <section id="inicio" className="pt-20 lg:pt-0 lg:min-h-screen flex items-center bg-[#F9F6F0] relative overflow-hidden">
-        {/* Luces mágicas de fondo (Glow) */}
+      {/* Hero Section */}
+      <section id="inicio" className="pt-32 lg:pt-0 lg:min-h-screen flex items-center bg-[#F9F6F0] relative overflow-hidden">
+        {/* Decoración de fondo */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#EBDDD5] opacity-60 blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#DBC2B9] opacity-40 blur-3xl pointer-events-none"></div>
         
-        <div className="max-w-6xl mx-auto px-6 py-20 lg:py-0 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10">
+        <div className="max-w-6xl mx-auto px-6 py-12 lg:py-0 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-10 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6">
             <span className="text-[#B98370] font-medium tracking-[0.3em] uppercase text-xs">
               {textos.hero_subtitulo || "Maquilladora Profesional"}
@@ -111,8 +111,8 @@ export default function App() {
               </a>
             </div>
           </div>
-          <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-12 lg:pt-0">
-            {/* Marco dorado simulado para la foto con altura dinámica arreglada */}
+          <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-4 lg:pt-0">
+            {/* Marco de la foto arreglado: Altura controlada, más margen superior para evitar corte del header */}
             <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#DBC2B9] shadow-2xl z-10 p-3 bg-white">
               <img 
                 src={getDirectDriveUrl(textos.imagen_principal) || "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800"} 
@@ -146,7 +146,6 @@ export default function App() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
-                  {/* Capa oscura tipo editorial de moda */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
                     <span className="text-[#B98370] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
                     <h3 className="text-[#F9F6F0] text-2xl font-serif">{item.Título}</h3>
@@ -172,13 +171,17 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {servicesData.map((item, index) => (
               item.Servicio && (
-                <div key={index} className="bg-white p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#EBDDD5] group">
+                <div key={index} className="bg-white p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#EBDDD5] group flex flex-col h-full">
                   <div className="w-12 h-12 mb-8 text-[#B98370] group-hover:text-[#59111E] transition-colors">
                     <Sparkles size={32} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-2xl font-serif text-[#2C1E16] mb-4">{item.Servicio}</h3>
-                  <p className="text-[#2C1E16]/70 font-light mb-8 min-h-[80px] leading-relaxed">{item['Descripción']}</p>
-                  <div className="pt-6 border-t border-[#EBDDD5] flex items-center justify-between">
+                  
+                  {/* flex-grow en la descripción empuja la parte inferior de la tarjeta hacia abajo */}
+                  <p className="text-[#2C1E16]/70 font-light mb-8 leading-relaxed flex-grow">{item['Descripción']}</p>
+                  
+                  {/* mt-auto asegura que el precio y el botón se queden alineados abajo del todo */}
+                  <div className="pt-6 border-t border-[#EBDDD5] flex items-center justify-between mt-auto">
                     <span className="text-[#59111E] font-serif text-xl italic">{item['Precio Base']}</span>
                     <a href="#contacto" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors">Reservar</a>
                   </div>
@@ -191,7 +194,6 @@ export default function App() {
 
       {/* Contacto Section */}
       <section id="contacto" className="bg-[#59111E] text-[#F9F6F0] py-32 relative overflow-hidden">
-        {/* Detalles dorados en el fondo oscuro */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#B98370] opacity-10 blur-[100px] pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#B98370] opacity-10 blur-[100px] pointer-events-none"></div>
 
