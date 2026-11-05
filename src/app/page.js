@@ -19,22 +19,18 @@ export default function App() {
   const [textos, setTextos] = useState({});
 
   useEffect(() => {
-    // URLs correctas del Google Sheet
     const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=0&single=true&output=csv"; 
     const SERVICIOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=1&single=true&output=csv";
     const TEXTOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=2&single=true&output=csv"; 
 
-    // Cargar Portfolio
     fetch(PORTFOLIO_CSV_URL)
       .then(res => res.text())
       .then(csv => Papa.parse(csv, { header: true, complete: (results) => setPortfolioData(results.data) }));
 
-    // Cargar Servicios
     fetch(SERVICIOS_CSV_URL)
       .then(res => res.text())
       .then(csv => Papa.parse(csv, { header: true, complete: (results) => setServicesData(results.data) }));
 
-    // Cargar Textos Web
     fetch(TEXTOS_CSV_URL)
       .then(res => res.text())
       .then(csv => {
@@ -64,6 +60,7 @@ export default function App() {
           
           <nav className="hidden md:flex space-x-10">
             <a href="#inicio" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Inicio</a>
+            <a href="#sobre-mi" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Sobre mí</a>
             <a href="#portfolio" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Portfolio</a>
             <a href="#servicios" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Servicios</a>
             <a href="#contacto" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Contacto</a>
@@ -77,6 +74,7 @@ export default function App() {
         {isMenuOpen && (
           <nav className="md:hidden bg-[#F9F6F0] border-t border-[#EBDDD5] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full">
             <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Inicio</a>
+            <a href="#sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Sobre mí</a>
             <a href="#portfolio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Portfolio</a>
             <a href="#servicios" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Servicios</a>
             <a href="#contacto" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Contacto</a>
@@ -99,10 +97,9 @@ export default function App() {
               <span className="text-[#59111E] italic pr-4">{textos.hero_titulo_2 || "belleza natural"}</span>
             </h1>
             <p className="text-[#2C1E16]/70 text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
-              {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales. Siéntete tú misma, pero en tu mejor versión."}
+              {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
             </p>
             <div className="pt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
-              {/* ENLACE AL GOOGLE FORM */}
               <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="bg-[#59111E] text-[#F9F6F0] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#3D0C15] transition-all shadow-lg flex items-center gap-3">
                 Solicitar Presupuesto <ArrowRight size={16} />
               </a>
@@ -123,8 +120,22 @@ export default function App() {
         </div>
       </section>
 
+      {/* SOBRE MI SECTION (Ahora antes del portfolio) */}
+      <section id="sobre-mi" className="py-24 bg-white border-t border-[#EBDDD5]">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-4xl font-serif text-[#59111E] mb-4">{textos.sobre_mi_titulo || "Sobre mí"}</h2>
+          <div className="w-12 h-[1px] bg-[#B98370] mx-auto mb-10"></div>
+          
+          <div className="bg-[#F9F6F0] p-10 md:p-14 shadow-sm border border-[#EBDDD5] text-left">
+            <p className="text-[#2C1E16]/80 font-light text-lg leading-relaxed whitespace-pre-line">
+              {textos.sobre_mi_texto || "Apasionada del arte y de la moda. Comienzo mi formación en el año 2011 en la escuela profesional de maquillaje DNI School..."}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-24 bg-white border-t border-[#EBDDD5]">
+      <section id="portfolio" className="py-24 bg-[#F9F6F0] border-t border-[#EBDDD5]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#59111E] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
@@ -138,7 +149,7 @@ export default function App() {
             {portfolioData.map((item, index) => (
               item.Imagen_URL && (
                 <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
-                  <div className="aspect-[3/4] overflow-hidden bg-[#F9F6F0]">
+                  <div className="aspect-[3/4] overflow-hidden bg-white">
                     <img 
                       src={getDirectDriveUrl(item.Imagen_URL)} 
                       alt={item.Título} 
@@ -157,7 +168,7 @@ export default function App() {
       </section>
 
       {/* Servicios Section */}
-      <section id="servicios" className="py-24 bg-[#F9F6F0]">
+      <section id="servicios" className="py-24 bg-white border-t border-[#EBDDD5]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#59111E] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
@@ -170,7 +181,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {servicesData.map((item, index) => (
               item.Servicio && (
-                <div key={index} className="bg-white p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#EBDDD5] group flex flex-col h-full">
+                <div key={index} className="bg-[#F9F6F0] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#EBDDD5] group flex flex-col h-full">
                   <div className="w-12 h-12 mb-8 text-[#B98370] group-hover:text-[#59111E] transition-colors">
                     <Sparkles size={32} strokeWidth={1.5} />
                   </div>
@@ -179,7 +190,6 @@ export default function App() {
                   
                   <div className="pt-6 border-t border-[#EBDDD5] flex items-center justify-between mt-auto">
                     <span className="text-[#59111E] font-serif text-xl italic">{item['Precio Base']}</span>
-                    {/* ENLACE AL GOOGLE FORM */}
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors">Reservar</a>
                   </div>
                 </div>
@@ -200,7 +210,6 @@ export default function App() {
             {textos.contacto_descripcion || "Cuéntame qué necesitas, la fecha de tu evento y dónde te encuentras. Te responderé lo antes posible con un presupuesto personalizado y disponibilidad."}
           </p>
           
-          {/* ENLACE AL GOOGLE FORM */}
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="bg-[#F9F6F0] text-[#59111E] px-10 py-5 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#B98370] hover:text-white transition-all shadow-xl inline-flex items-center gap-4 mb-20">
             {textos.boton_formulario || "Rellenar Formulario de Reserva"}
             <ArrowRight size={18} />
