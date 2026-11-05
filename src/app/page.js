@@ -102,8 +102,8 @@ export default function App() {
               {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales. Siéntete tú misma, pero en tu mejor versión."}
             </p>
             <div className="pt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
-              {/* ENLACE AL FORMULARIO ACTUALIZADO AQUÍ */}
-              <a href="https://tally.so/r/BEKpzR" target="_blank" rel="noopener noreferrer" className="bg-[#59111E] text-[#F9F6F0] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#3D0C15] transition-all shadow-lg flex items-center gap-3">
+              {/* ENLACE AL GOOGLE FORM */}
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="bg-[#59111E] text-[#F9F6F0] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#3D0C15] transition-all shadow-lg flex items-center gap-3">
                 Solicitar Presupuesto <ArrowRight size={16} />
               </a>
               <a href="#portfolio" className="text-[#59111E] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm border border-[#59111E] hover:bg-[#59111E]/5 transition-all">
@@ -179,8 +179,8 @@ export default function App() {
                   
                   <div className="pt-6 border-t border-[#EBDDD5] flex items-center justify-between mt-auto">
                     <span className="text-[#59111E] font-serif text-xl italic">{item['Precio Base']}</span>
-                    {/* ENLACE AL FORMULARIO ACTUALIZADO AQUÍ */}
-                    <a href="https://tally.so/r/BEKpzR" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors">Reservar</a>
+                    {/* ENLACE AL GOOGLE FORM */}
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors">Reservar</a>
                   </div>
                 </div>
               )
@@ -200,8 +200,8 @@ export default function App() {
             {textos.contacto_descripcion || "Cuéntame qué necesitas, la fecha de tu evento y dónde te encuentras. Te responderé lo antes posible con un presupuesto personalizado y disponibilidad."}
           </p>
           
-          {/* ENLACE AL FORMULARIO ACTUALIZADO AQUÍ (antes era un button, ahora es un enlace a Tally) */}
-          <a href="https://tally.so/r/BEKpzR" target="_blank" rel="noopener noreferrer" className="bg-[#F9F6F0] text-[#59111E] px-10 py-5 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#B98370] hover:text-white transition-all shadow-xl inline-flex items-center gap-4 mb-20">
+          {/* ENLACE AL GOOGLE FORM */}
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="bg-[#F9F6F0] text-[#59111E] px-10 py-5 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#B98370] hover:text-white transition-all shadow-xl inline-flex items-center gap-4 mb-20">
             {textos.boton_formulario || "Rellenar Formulario de Reserva"}
             <ArrowRight size={18} />
           </a>
