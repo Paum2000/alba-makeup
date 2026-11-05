@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Mail, ArrowRight, Sparkles } from 'lucide-react'; // Cambié Heart por Sparkles (muy Charlotte Tilbury)
+import { Menu, X, Mail, ArrowRight, Sparkles } from 'lucide-react';
 import Papa from 'papaparse';
 
 function getDirectDriveUrl(driveUrl) {
@@ -19,11 +19,10 @@ export default function App() {
   const [textos, setTextos] = useState({});
 
   useEffect(() => {
-    // 1. URLs de las 3 pestañas
+    // 1. URLs correctas de las 3 pestañas de tu Google Sheet
     const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=0&single=true&output=csv"; 
-    const SERVICIOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=1587570415&single=true&output=csv";
-    // Si tu URL de textos era otra, pégala aquí:
-    const TEXTOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=2141527783&single=true&output=csv"; 
+    const SERVICIOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=1&single=true&output=csv";
+    const TEXTOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=2&single=true&output=csv"; 
 
     // 2. Cargar Portfolio
     fetch(PORTFOLIO_CSV_URL)
@@ -112,13 +111,13 @@ export default function App() {
               </a>
             </div>
           </div>
-          <div className="flex-1 w-full max-w-md lg:max-w-full relative">
-            {/* Marco dorado simulado para la foto */}
-            <div className="aspect-[4/5] overflow-hidden border border-[#DBC2B9] shadow-2xl relative z-10 p-2 bg-white">
+          <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-12 lg:pt-0">
+            {/* Marco dorado simulado para la foto con altura dinámica arreglada */}
+            <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#DBC2B9] shadow-2xl z-10 p-3 bg-white">
               <img 
                 src={getDirectDriveUrl(textos.imagen_principal) || "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800"} 
                 alt="Alba trabajando" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
             </div>
           </div>
