@@ -86,7 +86,6 @@ export default function App() {
 
       {/* Hero Section */}
       <section id="inicio" className="pt-32 lg:pt-0 lg:min-h-screen flex items-center bg-[#F9F6F0] relative overflow-hidden">
-        {/* Decoración de fondo */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#EBDDD5] opacity-60 blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#DBC2B9] opacity-40 blur-3xl pointer-events-none"></div>
         
@@ -103,7 +102,8 @@ export default function App() {
               {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales. Siéntete tú misma, pero en tu mejor versión."}
             </p>
             <div className="pt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
-              <a href="#contacto" className="bg-[#59111E] text-[#F9F6F0] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#3D0C15] transition-all shadow-lg flex items-center gap-3">
+              {/* ENLACE AL FORMULARIO ACTUALIZADO AQUÍ */}
+              <a href="https://tally.so/r/BEKpzR" target="_blank" rel="noopener noreferrer" className="bg-[#59111E] text-[#F9F6F0] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#3D0C15] transition-all shadow-lg flex items-center gap-3">
                 Solicitar Presupuesto <ArrowRight size={16} />
               </a>
               <a href="#portfolio" className="text-[#59111E] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm border border-[#59111E] hover:bg-[#59111E]/5 transition-all">
@@ -112,7 +112,6 @@ export default function App() {
             </div>
           </div>
           <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-4 lg:pt-0">
-            {/* Marco de la foto arreglado: Altura controlada, más margen superior para evitar corte del header */}
             <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#DBC2B9] shadow-2xl z-10 p-3 bg-white">
               <img 
                 src={getDirectDriveUrl(textos.imagen_principal) || "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800"} 
@@ -176,14 +175,12 @@ export default function App() {
                     <Sparkles size={32} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-2xl font-serif text-[#2C1E16] mb-4">{item.Servicio}</h3>
-                  
-                  {/* flex-grow en la descripción empuja la parte inferior de la tarjeta hacia abajo */}
                   <p className="text-[#2C1E16]/70 font-light mb-8 leading-relaxed flex-grow">{item['Descripción']}</p>
                   
-                  {/* mt-auto asegura que el precio y el botón se queden alineados abajo del todo */}
                   <div className="pt-6 border-t border-[#EBDDD5] flex items-center justify-between mt-auto">
                     <span className="text-[#59111E] font-serif text-xl italic">{item['Precio Base']}</span>
-                    <a href="#contacto" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors">Reservar</a>
+                    {/* ENLACE AL FORMULARIO ACTUALIZADO AQUÍ */}
+                    <a href="https://tally.so/r/BEKpzR" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors">Reservar</a>
                   </div>
                 </div>
               )
@@ -203,10 +200,11 @@ export default function App() {
             {textos.contacto_descripcion || "Cuéntame qué necesitas, la fecha de tu evento y dónde te encuentras. Te responderé lo antes posible con un presupuesto personalizado y disponibilidad."}
           </p>
           
-          <button className="bg-[#F9F6F0] text-[#59111E] px-10 py-5 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#B98370] hover:text-white transition-all shadow-xl inline-flex items-center gap-4 mb-20">
+          {/* ENLACE AL FORMULARIO ACTUALIZADO AQUÍ (antes era un button, ahora es un enlace a Tally) */}
+          <a href="https://tally.so/r/BEKpzR" target="_blank" rel="noopener noreferrer" className="bg-[#F9F6F0] text-[#59111E] px-10 py-5 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#B98370] hover:text-white transition-all shadow-xl inline-flex items-center gap-4 mb-20">
             {textos.boton_formulario || "Rellenar Formulario de Reserva"}
             <ArrowRight size={18} />
-          </button>
+          </a>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-[#B98370] border-t border-[#F9F6F0]/10 pt-12">
             <a href={`mailto:${textos.email || "hola@albamakeup.com"}`} className="flex items-center gap-3 hover:text-[#F9F6F0] transition-colors tracking-wider font-light">
