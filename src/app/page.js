@@ -123,8 +123,9 @@ export default function App() {
     );
   };
 
-  const correoDestino = textos.email || "paum2000@gmail.com";
+  const correoDestino = textos.email || "makeup_al3a@hotmail.com";
 
+  // --- ENVÍO SEGURO CON WEB3FORMS ---
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -139,28 +140,34 @@ export default function App() {
 
     setFormStatus('enviando');
     
+    // AQUÍ ESTÁ TU CLAVE
+    const ACCESS_KEY = "58a655be-1946-454b-bc96-02d667722cf0";
+    
     const datosEnvio = {
+      access_key: ACCESS_KEY,
+      subject: "NUEVA SOLICITUD DE PRESUPUESTO - WEB",
+      from_name: "Web Alba Makeup",
       Nombre: formData.get("Nombre") || "No indicado",
       Email: formData.get("Email") || "No indicado",
       Teléfono: formData.get("Teléfono") || "No indicado",
-      Servicios: servicios.join(", "),
-      Fecha: formData.get("Fecha") || "No indicada",
-      Mensaje: formData.get("Mensaje") || "Sin mensaje",
-      _subject: "NUEVA SOLICITUD DE PRESUPUESTO - WEB",
-      _template: "table"
+      Servicios_solicitados: servicios.join(", "),
+      Fecha_del_evento: formData.get("Fecha") || "No indicada",
+      Mensaje: formData.get("Mensaje") || "Sin mensaje"
     };
 
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/${correoDestino}`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(datosEnvio)
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (result.success) {
         setFormStatus('exito');
         form.reset();
         setIsFormValid(false);
@@ -177,15 +184,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
-
-      {/* --- INICIO BOTÓN DE EMERGENCIA --- */}
-      <form action={`https://formsubmit.co/${correoDestino}`} method="POST" target="_blank" className="relative z-[9999] pt-32 pb-4 text-center">
-          <input type="hidden" name="Prueba" value="Activacion" />
-          <button type="submit" className="bg-red-600 text-white px-8 py-4 font-bold text-xl rounded shadow-2xl hover:bg-red-700 cursor-pointer animate-pulse border-4 border-red-800">
-              🚨 BOTÓN DE EMERGENCIA: ACTIVAR CORREO 🚨
-          </button>
-      </form>
-      {/* --- FIN BOTÓN DE EMERGENCIA (Bórralo cuando lo actives) --- */}
 
       <header className="fixed w-full top-0 z-50">
         <div className="absolute top-0 left-0 w-full h-20 md:h-24 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6] overflow-hidden -z-10">
@@ -233,10 +231,9 @@ export default function App() {
         )}
       </header>
 
-      <section id="inicio" className="pt-10 md:pt-20 lg:pt-20 lg:min-h-screen flex items-center relative z-10">
+      <section id="inicio" className="pt-32 md:pt-40 lg:pt-40 lg:min-h-screen flex items-center relative z-10">
         <div className="max-w-6xl mx-auto px-6 pb-12 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-4 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6 relative">
-            
             {fondoBrochazos && (
               <img 
                 src={fondoBrochazos} 
@@ -248,7 +245,6 @@ export default function App() {
                 }}
               />
             )}
-            
             {textos.logo && (
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
@@ -264,7 +260,7 @@ export default function App() {
                 {textos.hero_titulo_1 || "Realza tu"} <br/>
                 <span className="text-[#B07D7D] italic pr-4 inline-block transform hover:scale-[1.03] transition-transform duration-300">{textos.hero_titulo_2 || "belleza natural"}</span>
               </h1>
-              <p className="text-[#2A1C1C] text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-medium leading-relaxed mb-8 drop-shadow-sm">
+              <p className="text-[#2A1C1C] text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed mb-8 drop-shadow-sm">
                 {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
@@ -410,7 +406,6 @@ export default function App() {
             </p>
           </div>
 
-          {/* Formulario en versión AJAX para que funcione sin recargar la página */}
           <form 
             onSubmit={handleSubmit}
             onChange={checkFormValidity}
@@ -424,7 +419,7 @@ export default function App() {
             )}
             {formStatus === 'exito' && (
               <div className="mb-8 p-4 bg-green-500/20 border border-green-400 text-white text-center rounded">
-                ¡Mensaje enviado con éxito! Alba se pondrá en contacto contigo muy pronto.
+                ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo muy pronto.
               </div>
             )}
             {formStatus === 'error' && (
