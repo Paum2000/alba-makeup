@@ -211,8 +211,8 @@ export default function App() {
                   <div className="aspect-[3/4] overflow-hidden bg-[#2C1E16] flex items-center justify-center relative z-0">
                     {renderMedia(item)}
                   </div>
-                  {/* Aquí está el cambio crucial: opacity-100 para móvil y z-10 para asegurar que esté por encima del vídeo */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/40 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none z-10">
+                  {/* CAMBIO APLICADO: Degradado solo en la mitad inferior (h-1/2) */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2C1E16]/90 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none z-10">
                     <span className="text-[#B98370] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
                     <h3 className="text-[#F9F6F0] text-2xl font-serif">{item.Título}</h3>
                   </div>
