@@ -148,18 +148,10 @@ export default function App() {
       <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6]">
         <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           <a href="#inicio" className="flex items-center gap-3">
-            {textos.logo ? (
-              // SOLUCIÓN LOGO: Quitamos mix-blend y ajustamos tamaño
-              <img 
-                src={getDirectDriveUrl(textos.logo)} 
-                alt="ALBA GARCÍA VILLARREAL" 
-                className="h-14 md:h-20 w-auto object-contain py-1"
-              />
-            ) : (
-              <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
-                {textos.nombre_marca || "ALBA GARCÍA VILLARREAL"}
-              </div>
-            )}
+            {/* SOLUCIÓN LOGO: Restauramos el texto en la barra de navegación */}
+            <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
+              {textos.nombre_marca || "ALBA MAKEUP"}
+            </div>
           </a>
           
           <nav className="hidden md:flex space-x-10">
@@ -195,6 +187,16 @@ export default function App() {
 
         <div className="max-w-6xl mx-auto px-6 py-12 lg:py-0 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-10 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6">
+            
+            {/* NUEVA UBICACIÓN DEL LOGO: En grande dentro de la sección inicial con mix-blend para quitar su fondo */}
+            {textos.logo && (
+              <img 
+                src={getDirectDriveUrl(textos.logo)} 
+                alt="Logo Alba García Villarreal" 
+                className="mx-auto lg:mx-0 w-64 md:w-80 lg:w-96 h-auto object-contain mb-6 mix-blend-multiply"
+              />
+            )}
+
             <span className="text-[#D9B3B3] font-medium tracking-[0.3em] uppercase text-xs block">
               {textos.hero_subtitulo || "Make Up Artist"}
             </span>
@@ -229,7 +231,7 @@ export default function App() {
       {/* SOBRE MI SECTION */}
       <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
         
-        {/* SOLUCIÓN: Brochazo sutil decorativo en la esquina */}
+        {/* Brochazo sutil decorativo en la esquina */}
         <div 
           className="absolute -right-10 top-0 w-[20rem] h-[20rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform -rotate-12 mix-blend-multiply"
           style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
@@ -271,7 +273,6 @@ export default function App() {
 
       {/* Portfolio Section */}
       <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6] relative z-10 overflow-hidden">
-        
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
@@ -301,7 +302,6 @@ export default function App() {
 
       {/* Servicios Section */}
       <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
-        
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
@@ -333,7 +333,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section con Formulario Integrado (SOLUCIÓN: SIN BROCHAZOS DE FONDO) */}
+      {/* Contacto Section con Formulario Integrado */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
         
         {/* Acuarela pastel para romper la dureza del fondo oscuro */}
