@@ -339,14 +339,6 @@ export default function App() {
 
       {/* Contacto Section con Formulario Integrado */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
-        
-        {/* BROCHAZOS DECORATIVOS DEL FORMULARIO */}
-        {fondoBrochazos && (
-          <>
-            <img src={fondoBrochazos} alt="" className="absolute top-10 left-10 w-96 opacity-10 pointer-events-none mix-blend-screen transform -rotate-12" />
-            <img src={fondoBrochazos} alt="" className="absolute bottom-10 right-10 w-96 opacity-10 pointer-events-none mix-blend-screen transform rotate-180" />
-          </>
-        )}
 
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
