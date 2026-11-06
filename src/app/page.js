@@ -3,14 +3,73 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Mail, ArrowRight, Sparkles } from 'lucide-react';
 import Papa from 'papaparse';
 
+// Truco de la miniatura para evitar el bloqueo de imágenes de Drive
 function getDirectDriveUrl(driveUrl) {
   if (!driveUrl) return "";
   const idMatch = driveUrl.match(/\/d\/(.*?)\//);
   if (idMatch && idMatch[1]) {
-    // CORRECCIÓN: Usar el endpoint de thumbnail para evitar el bloqueo de Google Drive
     return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1000`;
   }
   return driveUrl;
+}
+
+// Función inteligente para reproducir cualquier vídeo o imagen sin errores
+function renderMedia(item) {
+  const isVideo = item.Tipo && item.Tipo.trim().toLowerCase() === 'video';
+  const url = item.Imagen_URL || '';
+
+  if (!isVideo) {
+    return (
+      <img 
+        src={getDirectDriveUrl(url)} 
+        alt={item.Título} 
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+    );
+  }
+
+  // 1. Si es un vídeo de YouTube
+  if (url.includes('youtube.com') || url.includes('youtu.be')) {
+    let ytId = '';
+    if (url.includes('youtu.be/')) ytId = url.split('youtu.be/')[1]?.split('?')[0];
+    else if (url.includes('watch?v=')) ytId = url.split('watch?v=')[1]?.split('&')[0];
+    else if (url.includes('embed/')) ytId = url.split('embed/')[1]?.split('?')[0];
+
+    return (
+      <iframe 
+        src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&playsinline=1&rel=0`}
+        // El scale-[1.35] oculta los bordes y el título de YouTube
+        className="w-full h-full object-cover pointer-events-none scale-[1.35]"
+        allow="autoplay; encrypted-media"
+      ></iframe>
+    );
+  }
+
+  // 2. Si es un vídeo de Drive (se mostrará el reproductor nativo de Drive)
+  if (url.includes('drive.google.com')) {
+    const idMatch = url.match(/\/d\/(.*?)\//) || url.match(/id=(.*?)(&|$)/);
+    if (idMatch && idMatch[1]) {
+      return (
+        <iframe
+          src={`https://drive.google.com/file/d/${idMatch[1]}/preview`}
+          className="w-full h-full object-cover"
+          allow="autoplay"
+        ></iframe>
+      );
+    }
+  }
+
+  // 3. Si es un vídeo directo (.mp4)
+  return (
+    <video 
+      src={url} 
+      className="w-full h-full object-cover"
+      autoPlay 
+      muted 
+      loop 
+      playsInline
+    ></video>
+  );
 }
 
 export default function App() {
@@ -135,7 +194,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Portfolio Section (CORREGIDO PARA VÍDEOS) */}
+      {/* Portfolio Section */}
       <section id="portfolio" className="py-24 bg-[#F9F6F0] border-t border-[#EBDDD5]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -150,33 +209,9 @@ export default function App() {
             {portfolioData.map((item, index) => (
               item.Imagen_URL && (
                 <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
-                  <div className="aspect-[3/4] overflow-hidden bg-white">
-                    {/* Aquí está la lógica de los vídeos añadida */}
-                    {item.Tipo && item.Tipo.trim().toLowerCase() === 'video' ? (
-                      item.Imagen_URL.includes('youtube.com') || item.Imagen_URL.includes('youtu.be') ? (
-                        <iframe 
-                          src={`https://www.youtube.com/embed/${item.Imagen_URL.split('/').pop().replace('watch?v=', '')}?autoplay=1&mute=1&loop=1&controls=0`}
-                          className="w-full h-full object-cover"
-                          allow="autoplay; encrypted-media"
-                          allowFullScreen
-                        ></iframe>
-                      ) : (
-                        <video 
-                          src={item.Imagen_URL} 
-                          className="w-full h-full object-cover"
-                          autoPlay 
-                          muted 
-                          loop 
-                          playsInline
-                        ></video>
-                      )
-                    ) : (
-                      <img 
-                        src={getDirectDriveUrl(item.Imagen_URL)} 
-                        alt={item.Título} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    )}
+                  <div className="aspect-[3/4] overflow-hidden bg-[#2C1E16] flex items-center justify-center">
+                    {/* Llamamos a la función mágica que hemos creado arriba */}
+                    {renderMedia(item)}
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8 pointer-events-none">
                     <span className="text-[#B98370] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
