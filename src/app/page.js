@@ -138,7 +138,7 @@ export default function App() {
 
     setFormStatus('enviando');
 
-    const destinatario = textos.email || "makeup_al3a@hotmail.com";
+    const destinatario = textos.email || "paum2000@gmail.com";
     
     const datosEnvio = {
       Nombre: formData.get("Nombre") || "No indicado",
