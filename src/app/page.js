@@ -214,17 +214,20 @@ export default function App() {
       <section id="inicio" className="pt-32 md:pt-40 lg:pt-40 lg:min-h-screen flex items-center relative z-10">
         <div className="max-w-6xl mx-auto px-6 pb-12 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-4 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6 relative">
+            
+            {/* Aquí quitamos la reducción de opacidad y ajustamos la máscara */}
             {fondoBrochazos && (
               <img 
                 src={fondoBrochazos} 
                 alt="" 
-                className="absolute top-1/2 left-1/2 w-full max-w-[500px] pointer-events-none mix-blend-multiply transform -translate-x-1/2 -translate-y-1/2 -z-10 opacity-60" 
+                className="absolute top-1/2 left-1/2 w-full max-w-[500px] pointer-events-none mix-blend-multiply transform -translate-x-1/2 -translate-y-1/2 -z-10" 
                 style={{
-                  maskImage: 'radial-gradient(ellipse, black 40%, transparent 80%)',
-                  WebkitMaskImage: 'radial-gradient(ellipse, black 40%, transparent 80%)'
+                  maskImage: 'radial-gradient(ellipse at center, black 55%, transparent 75%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 55%, transparent 75%)'
                 }}
               />
             )}
+            
             {textos.logo && (
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
@@ -336,152 +339,4 @@ export default function App() {
       <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
-            <p className="text-[#4A3C3C]/60 font-light max-w-2xl mx-auto">
-              {textos.servicios_descripcion || "Tratamientos y maquillajes adaptados a cada ocasión."}
-            </p>
-            <div className="w-12 h-[1px] bg-[#D9B3B3] mx-auto mt-6"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {servicesData.map((item, index) => (
-              item.Servicio && (
-                <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full rounded-lg relative overflow-hidden">
-                  {fondoBrochazos && (
-                    <img 
-                      src={fondoBrochazos} 
-                      alt="" 
-                      className="absolute -top-6 -right-6 w-36 pointer-events-none mix-blend-multiply transform rotate-45 opacity-60" 
-                      style={{
-                        maskImage: 'radial-gradient(circle, black 30%, transparent 70%)',
-                        WebkitMaskImage: 'radial-gradient(circle, black 30%, transparent 70%)'
-                      }}
-                    />
-                  )}
-                  <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors relative z-10">
-                    <Sparkles size={32} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-2xl font-serif text-[#4A3C3C] mb-4 relative z-10">{item.Servicio}</h3>
-                  <p className="text-[#4A3C3C]/70 font-light mb-8 leading-relaxed flex-grow relative z-10">{item['Descripción']}</p>
-                  <div className="pt-6 border-t border-[#F0E6E6] flex items-center justify-end mt-auto relative z-10">
-                    <a href="#contacto" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B07D7D] hover:text-[#8F6363] transition-colors flex items-center gap-2 group-hover:translate-x-1 duration-300">
-                      Consultar disponibilidad <ArrowRight size={14} />
-                    </a>
-                  </div>
-                </div>
-              )
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
-        <div className="max-w-4xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-serif mb-6">{textos.contacto_titulo || "Ponte en contacto conmigo"}</h2>
-            <p className="text-white/80 font-light text-lg max-w-2xl mx-auto leading-relaxed">
-              {textos.contacto_descripcion || "Rellena este formulario con los detalles de tu evento y me pondré en contacto contigo lo antes posible."}
-            </p>
-          </div>
-
-          <form 
-            onSubmit={handleSubmit}
-            onChange={checkFormValidity}
-            className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/20 shadow-xl relative"
-          >
-            {formStatus === 'enviando' && (
-              <div className="mb-8 p-4 bg-white/10 border border-white/30 text-white text-center rounded flex items-center justify-center gap-3">
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                Enviando solicitud...
-              </div>
-            )}
-            {formStatus === 'exito' && (
-              <div className="mb-8 p-4 bg-green-500/20 border border-green-400 text-white text-center rounded">
-                ¡Mensaje enviado con éxito! Alba se pondrá en contacto contigo muy pronto.
-              </div>
-            )}
-            {formStatus === 'error' && (
-              <div className="mb-8 p-4 bg-red-500/30 border border-red-400 text-white text-center rounded">
-                Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo o escríbenos directamente al correo.
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 relative z-10">
-              <div className="md:col-span-2">
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Nombre completo *</label>
-                <input type="text" name="Nombre" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu nombre" />
-              </div>
-
-              <div>
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Email *</label>
-                <input type="email" name="Email" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="tu@email.com" />
-              </div>
-
-              <div>
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Teléfono *</label>
-                <input type="tel" name="Teléfono" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu número de teléfono" />
-              </div>
-            </div>
-
-            <div className="mb-8 relative z-10">
-              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Tipo de servicio * (Puedes marcar varios)</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 bg-white/5 border border-white/10 rounded-lg">
-                {servicesData.map((item, index) => (
-                  item.Servicio && (
-                    <label key={index} className="flex items-center gap-3 cursor-pointer group">
-                      <input 
-                        type="checkbox" 
-                        name="Servicios solicitados" 
-                        value={item.Servicio} 
-                        className="w-4 h-4 accent-[#D9B3B3] cursor-pointer"
-                      />
-                      <span className="text-white/80 text-sm group-hover:text-white transition-colors">{item.Servicio}</span>
-                    </label>
-                  )
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-8 relative z-10">
-              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Fecha del evento (Si la tienes)</label>
-              <input type="date" name="Fecha" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors cursor-pointer" />
-            </div>
-
-            <div className="mb-10 relative z-10">
-              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Mensaje</label>
-              <textarea name="Mensaje" rows="4" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors resize-none" placeholder="Opcional: Cuéntame más detalles sobre el lugar, horarios, etc."></textarea>
-            </div>
-
-            <button 
-              type="submit" 
-              disabled={!isFormValid || formStatus === 'enviando'}
-              className={`w-full px-10 py-5 font-medium tracking-widest uppercase text-sm transition-all flex items-center justify-center gap-4 relative z-10 ${
-                isFormValid && formStatus !== 'enviando'
-                  ? 'bg-white text-[#B07D7D] hover:bg-[#FFF9F9] cursor-pointer shadow-lg' 
-                  : 'bg-white/20 text-white/50 cursor-not-allowed'
-              }`}
-            >
-              {formStatus === 'enviando' ? "Enviando..." : (isFormValid ? "Enviar solicitud" : "Rellena los datos para enviar")} 
-              {formStatus !== 'enviando' && <ArrowRight size={18} />}
-            </button>
-          </form>
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-white border-t border-white/20 pt-12 mt-16">
-            <a href={`mailto:${textos.email || "makeup_al3a@hotmail.com"}`} className="flex items-center gap-3 hover:text-[#F0E6E6] transition-colors tracking-wider font-light">
-              <Mail size={20} strokeWidth={1.5} />
-              {textos.email || "makeup_al3a@hotmail.com"}
-            </a>
-            <a href="tel:679665115" className="flex items-center gap-3 hover:text-[#F0E6E6] transition-colors tracking-wider font-light">
-              <Phone size={20} strokeWidth={1.5} />
-              679 66 51 15
-            </a>
-          </div>
-
-          <div className="mt-16 text-center text-xs tracking-widest uppercase text-white/50 relative z-10">
-            © {new Date().getFullYear()} {textos.nombre_marca || "Alba García Villarreal"}. Todos los derechos reservados.
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
+            <h2 className="text-4xl font-serif text-[#B
