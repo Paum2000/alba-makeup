@@ -73,6 +73,9 @@ export default function App() {
   const [portfolioData, setPortfolioData] = useState([]);
   const [servicesData, setServicesData] = useState([]);
   const [textos, setTextos] = useState({});
+  
+  // Nuevo estado para controlar si el formulario es válido y habilitar el botón
+  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=0&single=true&output=csv"; 
@@ -104,6 +107,23 @@ export default function App() {
         });
       });
   }, []);
+
+  // Función que vigila los cambios en el formulario en tiempo real
+  const checkFormValidity = (e) => {
+    const form = e.currentTarget;
+    const nombre = form.querySelector('input[name="Nombre"]')?.value || '';
+    const email = form.querySelector('input[name="Email"]')?.value || '';
+    const telefono = form.querySelector('input[name="Teléfono"]')?.value || '';
+    const checkboxes = form.querySelectorAll('input[name="Servicios solicitados"]:checked');
+    
+    // Si todos tienen texto y hay al menos 1 checkbox marcado, es válido
+    setIsFormValid(
+      nombre.trim() !== '' && 
+      email.trim() !== '' && 
+      telefono.trim() !== '' && 
+      checkboxes.length > 0
+    );
+  };
 
   return (
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C]">
@@ -274,7 +294,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section con Formulario Integrado */}
+      {/* Contacto Section con Formulario Integrado (CON VALIDACIÓN VISUAL) */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#D9B3B3] opacity-20 blur-[100px] pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D9B3B3] opacity-20 blur-[100px] pointer-events-none"></div>
@@ -287,43 +307,72 @@ export default function App() {
             </p>
           </div>
           
-          {/* FORMULARIO DE CONTACTO */}
-          {/* El action envía los datos a FormSubmit, y de ahí al correo de Alba */}
           <form 
             action={`https://formsubmit.co/${textos.email || "makeup_al3a@hotmail.com"}`} 
             method="POST" 
+            onChange={checkFormValidity}
             className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/20 shadow-xl"
           >
-            {/* Configuración oculta para FormSubmit */}
             <input type="hidden" name="_subject" value="¡Nueva solicitud de reserva desde tu web!" />
             <input type="hidden" name="_template" value="table" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              <div>
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Nombre completo</label>
+              <div className="md:col-span-2">
+                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Nombre completo *</label>
                 <input type="text" name="Nombre" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu nombre" />
               </div>
+              
               <div>
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Teléfono</label>
-                <input type="tel" name="Teléfono" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu teléfono" />
-              </div>
-              <div>
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Email</label>
+                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Email *</label>
                 <input type="email" name="Email" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="tu@email.com" />
               </div>
+              
               <div>
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Fecha del evento</label>
-                <input type="date" name="Fecha" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" />
+                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Teléfono *</label>
+                <input type="tel" name="Teléfono" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu número de teléfono" />
               </div>
+            </div>
+
+            <div className="mb-8">
+              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Tipo de servicio * (Puedes marcar varios)</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 bg-white/5 border border-white/10">
+                {servicesData.map((item, index) => (
+                  item.Servicio && (
+                    <label key={index} className="flex items-center gap-3 cursor-pointer group">
+                      <input 
+                        type="checkbox" 
+                        name="Servicios solicitados" 
+                        value={item.Servicio} 
+                        className="w-4 h-4 accent-[#D9B3B3] cursor-pointer"
+                      />
+                      <span className="text-white/80 text-sm group-hover:text-white transition-colors">{item.Servicio}</span>
+                    </label>
+                  )
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Fecha del evento (Si la tienes)</label>
+              <input type="date" name="Fecha" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" />
             </div>
             
             <div className="mb-10">
-              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Cuéntame más sobre lo que necesitas (Lugar, tipo de evento...)</label>
-              <textarea name="Mensaje" rows="4" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors resize-none" placeholder="Hola Alba, me gustaría pedirte presupuesto para..."></textarea>
+              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Mensaje</label>
+              <textarea name="Mensaje" rows="4" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors resize-none" placeholder="Opcional: Cuéntame más detalles sobre el lugar, horarios, etc."></textarea>
             </div>
 
-            <button type="submit" className="w-full bg-white text-[#B07D7D] px-10 py-5 font-medium tracking-widest uppercase text-sm hover:bg-[#FFF9F9] transition-all flex items-center justify-center gap-4">
-              Enviar solicitud <ArrowRight size={18} />
+            {/* BOTÓN MÁGICO QUE CAMBIA DE ESTADO */}
+            <button 
+              type="submit" 
+              disabled={!isFormValid}
+              className={`w-full px-10 py-5 font-medium tracking-widest uppercase text-sm transition-all flex items-center justify-center gap-4 ${
+                isFormValid 
+                  ? 'bg-white text-[#B07D7D] hover:bg-[#FFF9F9] cursor-pointer' 
+                  : 'bg-white/20 text-white/50 cursor-not-allowed'
+              }`}
+            >
+              {isFormValid ? "Enviar solicitud" : "Rellena los datos para enviar"} <ArrowRight size={18} />
             </button>
           </form>
 
