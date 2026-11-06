@@ -315,7 +315,7 @@ export default function App() {
                     <img 
                       src={fondoBrochazos} 
                       alt="" 
-                      className="absolute -top-6 -right-6 w-32 opacity-[0.15] pointer-events-none mix-blend-multiply transform rotate-45" 
+                      className="absolute -top-6 -right-6 w-32 opacity-[0.05] pointer-events-none mix-blend-multiply transform rotate-45" 
                     />
                   )}
 
