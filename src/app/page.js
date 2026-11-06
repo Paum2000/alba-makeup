@@ -200,7 +200,7 @@ export default function App() {
           <a href="#inicio" className="flex items-center gap-3">
             {/* Texto del logo más oscuro y grueso */}
             <div className="text-lg md:text-xl font-serif text-[#2A1C1C] font-medium tracking-[0.15em] uppercase drop-shadow-md">
-              {textos.nombre_marca || "ALBA GARCIA"}
+              {textos.nombre_marca || "ALBA GARCÍA"}
             </div>
           </a>
 
