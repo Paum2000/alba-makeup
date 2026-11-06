@@ -112,7 +112,7 @@ export default function App() {
     const form = e.currentTarget;
     const nombre = form.querySelector('input[name="Nombre"]')?.value || '';
     const email = form.querySelector('input[name="Email"]')?.value || '';
-    const telefono = form.querySelector('input[name="Teléfono"]')?.value || '';
+    const telefono = form.querySelector('input[name="Telefono"]')?.value || '';
     const checkboxes = form.querySelectorAll('input[name="Servicios solicitados"]:checked');
 
     setIsFormValid(
