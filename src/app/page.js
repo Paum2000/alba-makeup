@@ -262,7 +262,7 @@ export default function App() {
                 {textos.hero_titulo_1 || "Realza tu"} <br/>
                 <span className="text-[#B07D7D] italic pr-4 inline-block transform hover:scale-[1.03] transition-transform duration-300">{textos.hero_titulo_2 || "belleza natural"}</span>
               </h1>
-              <p className="text-[#4A3C3C]/70 text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed mb-8">
+              <p className="text-[#4A3C3C]/70 text-lg md:text-xl max-w-lg mx-auto lg:mx-0  leading-relaxed mb-8">
                 {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
