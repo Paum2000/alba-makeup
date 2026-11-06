@@ -196,7 +196,7 @@ export default function App() {
             )}
 
             <div className="relative z-10">
-              <span className="text-[#D9B3B3] font-medium tracking-[0.3em] uppercase text-xs block mb-4">
+              <span className="text-[#B07D7D] font-medium tracking-[0.3em] uppercase text-xs block mb-4">
                 {textos.hero_subtitulo || "Make Up Artist"}
               </span>
               <h1 className="text-5xl lg:text-7xl font-serif text-[#4A3C3C] leading-tight mb-4">
