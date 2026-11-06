@@ -106,6 +106,7 @@ export default function App() {
       });
   }, []);
 
+  // Función 1: Vigila el formulario para encender el botón en tiempo real
   const checkFormValidity = (e) => {
     const form = e.currentTarget;
     const nombre = form.querySelector('input[name="Nombre"]')?.value || '';
@@ -119,6 +120,19 @@ export default function App() {
       telefono.trim() !== '' && 
       checkboxes.length > 0
     );
+  };
+
+  // Función 2 (La que faltaba): Bloquea el envío si se intenta enviar sin servicios
+  const validarFormulario = (e) => {
+    const form = e.currentTarget;
+    const checkboxes = form.querySelectorAll('input[name="Servicios solicitados"]');
+    if (checkboxes.length > 0) {
+      const isChecked = Array.from(checkboxes).some(cb => cb.checked);
+      if (!isChecked) {
+        e.preventDefault(); 
+        alert("Por favor, selecciona al menos un tipo de servicio de la lista.");
+      }
+    }
   };
 
   // Variable auxiliar para el fondo dinámico de brochazos
@@ -345,7 +359,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section con Formulario Integrado (CON VALIDACIÓN VISUAL Y BROCHAZOS) */}
+      {/* Contacto Section */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
         
         {/* Acuarela pastel para romper la dureza del fondo oscuro */}
