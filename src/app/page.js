@@ -218,7 +218,7 @@ export default function App() {
               <img 
                 src={fondoBrochazos} 
                 alt="" 
-                className="absolute top-1/2 left-1/2 w-full max-w-[500px] opacity-40 pointer-events-none mix-blend-multiply transform -translate-x-1/2 -translate-y-1/2 -z-10" 
+                className="absolute top-1/2 left-1/2 w-full max-w-[500px] pointer-events-none mix-blend-multiply transform -translate-x-1/2 -translate-y-1/2 -z-10" 
               />
             )}
             {textos.logo && (
@@ -349,7 +349,7 @@ export default function App() {
                     <img 
                       src={fondoBrochazos} 
                       alt="" 
-                      className="absolute -top-6 -right-6 w-32 opacity-40 pointer-events-none mix-blend-multiply transform rotate-45" 
+                      className="absolute -top-6 -right-6 w-32 pointer-events-none mix-blend-multiply transform rotate-45" 
                     />
                   )}
                   <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors relative z-10">
