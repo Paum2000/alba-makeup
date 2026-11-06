@@ -7,7 +7,8 @@ function getDirectDriveUrl(driveUrl) {
   if (!driveUrl) return "";
   const idMatch = driveUrl.match(/\/d\/(.*?)\//);
   if (idMatch && idMatch[1]) {
-    return `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+    // CORRECCIÓN: Usar el endpoint de thumbnail para evitar el bloqueo de Google Drive
+    return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1000`;
   }
   return driveUrl;
 }
