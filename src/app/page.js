@@ -23,7 +23,7 @@ function renderMedia(item) {
       <img 
         src={getDirectDriveUrl(url)} 
         alt={item.Título} 
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 relative z-10"
       />
     );
   }
@@ -37,7 +37,7 @@ function renderMedia(item) {
     return (
       <iframe 
         src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&playsinline=1&rel=0`}
-        className="w-full h-full object-cover pointer-events-none scale-[1.35]"
+        className="w-full h-full object-cover pointer-events-none scale-[1.35] relative z-10"
         allow="autoplay; encrypted-media"
       ></iframe>
     );
@@ -49,7 +49,7 @@ function renderMedia(item) {
       return (
         <iframe
           src={`https://drive.google.com/file/d/${idMatch[1]}/preview`}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover relative z-10"
           allow="autoplay"
         ></iframe>
       );
@@ -59,7 +59,7 @@ function renderMedia(item) {
   return (
     <video 
       src={url} 
-      className="w-full h-full object-cover"
+      className="w-full h-full object-cover relative z-10"
       autoPlay 
       muted 
       loop 
@@ -73,8 +73,6 @@ export default function App() {
   const [portfolioData, setPortfolioData] = useState([]);
   const [servicesData, setServicesData] = useState([]);
   const [textos, setTextos] = useState({});
-  
-  // Nuevo estado para controlar si el formulario es válido y habilitar el botón
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
@@ -108,7 +106,6 @@ export default function App() {
       });
   }, []);
 
-  // Función que vigila los cambios en el formulario en tiempo real
   const checkFormValidity = (e) => {
     const form = e.currentTarget;
     const nombre = form.querySelector('input[name="Nombre"]')?.value || '';
@@ -116,7 +113,6 @@ export default function App() {
     const telefono = form.querySelector('input[name="Teléfono"]')?.value || '';
     const checkboxes = form.querySelectorAll('input[name="Servicios solicitados"]:checked');
     
-    // Si todos tienen texto y hay al menos 1 checkbox marcado, es válido
     setIsFormValid(
       nombre.trim() !== '' && 
       email.trim() !== '' && 
@@ -125,14 +121,34 @@ export default function App() {
     );
   };
 
+  // Variable auxiliar para el fondo dinámico de brochazos
+  const fondoBrochazos = getDirectDriveUrl(textos.fondo_brochazos);
+
   return (
-    <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C]">
+    <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
+      
+      {/* ─── BROCHAZOS DE FONDO GENERALES ─── */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.06] z-0 bg-repeat bg-[size:1000px_auto]"
+        style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
+      ></div>
+
       {/* Header / Navbar */}
-      <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/90 backdrop-blur-md border-b border-[#F0E6E6]">
+      <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6]">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="text-xl md:text-2xl font-serif text-[#B07D7D] font-light tracking-[0.2em] uppercase">
-            {textos.nombre_marca || "ALBA GARCÍA VILLARREAL"}
-          </div>
+          <a href="#inicio" className="flex items-center gap-3">
+            {textos.logo ? (
+              <img 
+                src={getDirectDriveUrl(textos.logo)} 
+                alt="ALBA GARCÍA VILLARREAL" 
+                className="h-12 md:h-16 w-auto object-contain"
+              />
+            ) : (
+              <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
+                {textos.nombre_marca || "ALBA GARCÍA VILLARREAL"}
+              </div>
+            )}
+          </a>
           
           <nav className="hidden md:flex space-x-10">
             <a href="#inicio" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Inicio</a>
@@ -142,7 +158,7 @@ export default function App() {
             <a href="#contacto" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Contacto</a>
           </nav>
 
-          <button className="md:hidden text-[#B07D7D]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="md:hidden text-[#B07D7D] z-50" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -159,18 +175,20 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="pt-32 lg:pt-0 lg:min-h-screen flex items-center bg-[#FFF9F9] relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#F5E6E6] opacity-60 blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#E8F0EE] opacity-40 blur-3xl pointer-events-none"></div>
+      <section id="inicio" className="pt-32 lg:pt-0 lg:min-h-screen flex items-center relative overflow-hidden z-10">
         
+        {/* Manchas de acuarela */}
+        <div className="absolute top-1/4 right-0 w-[40rem] h-[40rem] bg-gradient-to-tr from-[#F2D1C9] via-[#D3E5E1] to-[#E3C6D3] rounded-full opacity-[0.25] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+        <div className="absolute -bottom-20 -left-20 w-[30rem] h-[30rem] bg-gradient-to-tr from-[#EAD9D5] to-[#E3D3C3] rounded-full opacity-[0.2] blur-2xl pointer-events-none"></div>
+
         <div className="max-w-6xl mx-auto px-6 py-12 lg:py-0 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-10 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6">
-            <span className="text-[#D9B3B3] font-medium tracking-[0.3em] uppercase text-xs">
+            <span className="text-[#D9B3B3] font-medium tracking-[0.3em] uppercase text-xs block">
               {textos.hero_subtitulo || "Make Up Artist"}
             </span>
             <h1 className="text-5xl lg:text-7xl font-serif text-[#4A3C3C] leading-tight">
               {textos.hero_titulo_1 || "Realza tu"} <br/>
-              <span className="text-[#B07D7D] italic pr-4">{textos.hero_titulo_2 || "belleza natural"}</span>
+              <span className="text-[#B07D7D] italic pr-4 inline-block transform hover:scale-[1.03] transition-transform duration-300">{textos.hero_titulo_2 || "belleza natural"}</span>
             </h1>
             <p className="text-[#4A3C3C]/70 text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
               {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
@@ -185,6 +203,11 @@ export default function App() {
             </div>
           </div>
           <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-4 lg:pt-0">
+            {/* Marco de pintura de fondo */}
+            <div 
+              className="absolute -top-6 -right-6 w-32 h-32 bg-no-repeat bg-contain opacity-40 pointer-events-none"
+              style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
+            ></div>
             <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#F0E6E6] shadow-2xl z-10 p-3 bg-white">
               <img 
                 src={getDirectDriveUrl(textos.imagen_principal) || "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800"} 
@@ -192,12 +215,23 @@ export default function App() {
                 className="w-full h-full object-cover object-center"
               />
             </div>
+            <div 
+              className="absolute -bottom-8 -left-8 w-44 h-44 bg-no-repeat bg-contain opacity-40 pointer-events-none transform rotate-45"
+              style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
+            ></div>
           </div>
         </div>
       </section>
 
       {/* SOBRE MI SECTION */}
-      <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6]">
+      <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
+        
+        {/* Pincelada cruzada */}
+        <div 
+          className="absolute -right-20 top-1/4 w-[35rem] h-[35rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform -rotate-12"
+          style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
+        ></div>
+
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="w-full lg:w-5/12">
@@ -209,8 +243,8 @@ export default function App() {
                 />
               </div>
             </div>
-            <div className="w-full lg:w-7/12 flex flex-col justify-center text-center lg:text-left">
-              <h2 className="text-5xl md:text-6xl font-serif text-[#B07D7D] mb-6 italic">
+            <div className="w-full lg:w-7/12 flex flex-col justify-center text-center lg:text-left relative">
+              <h2 className="text-5xl md:text-6xl font-serif text-[#B07D7D] mb-6 italic relative inline-block">
                 {textos.sobre_mi_titulo || "Sobre mí"}
               </h2>
               <h3 className="text-xl md:text-2xl font-serif text-[#4A3C3C] mb-8 leading-relaxed tracking-wide uppercase">
@@ -223,7 +257,7 @@ export default function App() {
                 </p>
               </div>
               <div className="pt-10 mt-10 border-t border-[#F0E6E6]">
-                <p className="text-[#B07D7D] font-serif text-2xl italic">
+                <p className="text-[#B07D7D] font-serif text-2xl italic relative inline-block">
                   "{textos.sobre_mi_cita || "Mi trabajo es escuchar, asesorar y crear maquillajes que te hagan sentir tú, pero en tu mejor versión."}"
                 </p>
               </div>
@@ -233,7 +267,13 @@ export default function App() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6]">
+      <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6] relative z-10 overflow-hidden">
+        
+        <div 
+          className="absolute -left-20 top-0 w-[24rem] h-[24rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform -rotate-45"
+          style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
+        ></div>
+
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
@@ -246,7 +286,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {portfolioData.map((item, index) => (
               item.Imagen_URL && (
-                <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
+                <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 rounded-lg">
                   <div className="aspect-[3/4] overflow-hidden bg-[#4A3C3C] flex items-center justify-center relative z-0">
                     {renderMedia(item)}
                   </div>
@@ -262,7 +302,13 @@ export default function App() {
       </section>
 
       {/* Servicios Section */}
-      <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6]">
+      <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
+        
+        <div 
+          className="absolute -right-20 top-1/3 w-[30rem] h-[30rem] bg-no-repeat bg-contain opacity-[0.04] pointer-events-none transform"
+          style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
+        ></div>
+
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
@@ -275,15 +321,20 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {servicesData.map((item, index) => (
               item.Servicio && (
-                <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full">
-                  <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors">
+                <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full rounded-lg relative overflow-hidden">
+                  <div 
+                    className="absolute -top-12 -right-12 w-28 h-28 bg-no-repeat bg-contain opacity-[0.08] pointer-events-none transform -rotate-12"
+                    style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
+                  ></div>
+                  
+                  <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors relative z-10">
                     <Sparkles size={32} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-2xl font-serif text-[#4A3C3C] mb-4">{item.Servicio}</h3>
-                  <p className="text-[#4A3C3C]/70 font-light mb-8 leading-relaxed flex-grow">{item['Descripción']}</p>
+                  <h3 className="text-2xl font-serif text-[#4A3C3C] mb-4 relative z-10">{item.Servicio}</h3>
+                  <p className="text-[#4A3C3C]/70 font-light mb-8 leading-relaxed flex-grow relative z-10">{item['Descripción']}</p>
                   
-                  <div className="pt-6 border-t border-[#F0E6E6] flex items-center justify-end mt-auto">
-                    <a href="#contacto" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B07D7D] hover:text-[#8F6363] transition-colors flex items-center gap-2">
+                  <div className="pt-6 border-t border-[#F0E6E6] flex items-center justify-end mt-auto relative z-10">
+                    <a href="#contacto" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B07D7D] hover:text-[#8F6363] transition-colors flex items-center gap-2 group-hover:translate-x-1 duration-300">
                       Consultar disponibilidad <ArrowRight size={14} />
                     </a>
                   </div>
@@ -294,10 +345,16 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section con Formulario Integrado (CON VALIDACIÓN VISUAL) */}
-      <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#D9B3B3] opacity-20 blur-[100px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D9B3B3] opacity-20 blur-[100px] pointer-events-none"></div>
+      {/* Contacto Section con Formulario Integrado (CON VALIDACIÓN VISUAL Y BROCHAZOS) */}
+      <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
+        
+        {/* Acuarela pastel para romper la dureza del fondo oscuro */}
+        <div className="absolute top-0 right-0 w-[45rem] h-[45rem] bg-gradient-to-bl from-[#FCDED9] via-[#EAE1E8] to-transparent opacity-[0.18] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+        <div className="absolute bottom-0 left-0 w-[35rem] h-[35rem] bg-gradient-to-tr from-[#ECDEC9] to-transparent opacity-[0.12] blur-2xl pointer-events-none -ml-40 -mb-40"></div>
+        <div 
+          className="absolute right-10 bottom-10 w-[24rem] h-[24rem] bg-no-repeat bg-contain opacity-[0.12] pointer-events-none transform rotate-180"
+          style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
+        ></div>
 
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
@@ -310,13 +367,14 @@ export default function App() {
           <form 
             action={`https://formsubmit.co/${textos.email || "makeup_al3a@hotmail.com"}`} 
             method="POST" 
+            onSubmit={validarFormulario}
             onChange={checkFormValidity}
-            className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/20 shadow-xl"
+            className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/20 shadow-xl relative"
           >
             <input type="hidden" name="_subject" value="¡Nueva solicitud de reserva desde tu web!" />
             <input type="hidden" name="_template" value="table" />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 relative z-10">
               <div className="md:col-span-2">
                 <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Nombre completo *</label>
                 <input type="text" name="Nombre" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu nombre" />
@@ -333,9 +391,9 @@ export default function App() {
               </div>
             </div>
 
-            <div className="mb-8">
+            <div className="mb-8 relative z-10">
               <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Tipo de servicio * (Puedes marcar varios)</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 bg-white/5 border border-white/10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 bg-white/5 border border-white/10 rounded-lg">
                 {servicesData.map((item, index) => (
                   item.Servicio && (
                     <label key={index} className="flex items-center gap-3 cursor-pointer group">
@@ -352,23 +410,22 @@ export default function App() {
               </div>
             </div>
 
-            <div className="mb-8">
+            <div className="mb-8 relative z-10">
               <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Fecha del evento (Si la tienes)</label>
-              <input type="date" name="Fecha" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" />
+              <input type="date" name="Fecha" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors cursor-pointer" />
             </div>
             
-            <div className="mb-10">
+            <div className="mb-10 relative z-10">
               <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Mensaje</label>
               <textarea name="Mensaje" rows="4" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors resize-none" placeholder="Opcional: Cuéntame más detalles sobre el lugar, horarios, etc."></textarea>
             </div>
 
-            {/* BOTÓN MÁGICO QUE CAMBIA DE ESTADO */}
             <button 
               type="submit" 
               disabled={!isFormValid}
-              className={`w-full px-10 py-5 font-medium tracking-widest uppercase text-sm transition-all flex items-center justify-center gap-4 ${
+              className={`w-full px-10 py-5 font-medium tracking-widest uppercase text-sm transition-all flex items-center justify-center gap-4 relative z-10 ${
                 isFormValid 
-                  ? 'bg-white text-[#B07D7D] hover:bg-[#FFF9F9] cursor-pointer' 
+                  ? 'bg-white text-[#B07D7D] hover:bg-[#FFF9F9] cursor-pointer shadow-lg' 
                   : 'bg-white/20 text-white/50 cursor-not-allowed'
               }`}
             >
@@ -387,7 +444,7 @@ export default function App() {
             </a>
           </div>
           
-          <div className="mt-16 text-center text-xs tracking-widest uppercase text-white/50">
+          <div className="mt-16 text-center text-xs tracking-widest uppercase text-white/50 relative z-10">
             © {new Date().getFullYear()} {textos.nombre_marca || "Alba García Villarreal"}. Todos los derechos reservados.
           </div>
         </div>
