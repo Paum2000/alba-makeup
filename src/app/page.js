@@ -179,20 +179,22 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
 
-      <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6]">
-        
-        {/* POP DE COLOR EN LA NAVEGACIÓN (Extremo izquierdo) */}
-        {fondoBrochazos && (
-          <img 
-            src={fondoBrochazos} 
-            alt="" 
-            className="absolute top-1/2 left-0 w-40 md:w-48 transform -translate-y-1/2 -translate-x-1/4 pointer-events-none mix-blend-multiply opacity-80"
-            style={{
-              maskImage: 'radial-gradient(circle at center, black 30%, transparent 70%)',
-              WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 70%)'
-            }}
-          />
-        )}
+      <header className="fixed w-full top-0 z-50">
+        {/* FONDO Y BROCHAZO RECORTADO A LA ALTURA DE LA BARRA */}
+        <div className="absolute top-0 left-0 w-full h-20 md:h-24 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6] overflow-hidden -z-10">
+          {fondoBrochazos && (
+            <img 
+              src={fondoBrochazos} 
+              alt="" 
+              className="absolute top-1/2 left-0 w-64 md:w-80 transform -translate-y-1/2 -translate-x-1/4 pointer-events-none mix-blend-multiply"
+              style={{
+                /* Difuminado suave solo hacia la derecha para fundirse con el blanco */
+                maskImage: 'linear-gradient(to right, black 40%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, black 40%, transparent 100%)'
+              }}
+            />
+          )}
+        </div>
 
         <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between relative z-10">
           <a href="#inicio" className="flex items-center gap-3">
@@ -215,7 +217,7 @@ export default function App() {
         </div>
 
         {isMenuOpen && (
-          <nav className="md:hidden bg-[#FFF9F9] border-t border-[#F0E6E6] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full mt-4">
+          <nav className="md:hidden bg-[#FFF9F9] border-b border-[#F0E6E6] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full top-20">
             <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Inicio</a>
             <a href="#sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Sobre mí</a>
             <a href="#portfolio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Portfolio</a>
