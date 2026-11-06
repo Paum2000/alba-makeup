@@ -76,8 +76,6 @@ export default function App() {
   const [textos, setTextos] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const [formStatus, setFormStatus] = useState('');
-
   useEffect(() => {
     const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=0&single=true&output=csv"; 
     const SERVICIOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=1&single=true&output=csv";
@@ -124,63 +122,13 @@ export default function App() {
     );
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const servicios = formData.getAll("Servicios solicitados");
-
-    if (servicios.length === 0) {
-      alert("Por favor, selecciona al menos un tipo de servicio de la lista.");
-      return;
-    }
-
-    setFormStatus('enviando');
-
-    const destinatario = textos.email || "paum2000@gmail.com";
-    
-    const datosEnvio = {
-      Nombre: formData.get("Nombre") || "No indicado",
-      Email: formData.get("Email") || "No indicado",
-      Teléfono: formData.get("Teléfono") || "No indicado",
-      Servicios: servicios.join(", "),
-      Fecha: formData.get("Fecha") || "No indicada",
-      Mensaje: formData.get("Mensaje") || "Sin mensaje",
-      _subject: "NUEVA SOLICITUD DE PRESUPUESTO - WEB",
-      _template: "table"
-    };
-
-    try {
-      const response = await fetch(`https://formsubmit.co/ajax/${destinatario}`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(datosEnvio)
-      });
-
-      if (response.ok) {
-        setFormStatus('exito');
-        form.reset();
-        setIsFormValid(false);
-      } else {
-        setFormStatus('error');
-      }
-    } catch (error) {
-      console.error("Error al enviar:", error);
-      setFormStatus('error');
-    }
-  };
-
   const fondoBrochazos = getDirectDriveUrl(textos.fondo_brochazos);
+  const correoDestino = textos.email || "paum2000@gmail.com";
 
   return (
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
 
       <header className="fixed w-full top-0 z-50">
-        {/* FONDO Y BROCHAZO RECORTADO A LA ALTURA DE LA BARRA */}
         <div className="absolute top-0 left-0 w-full h-20 md:h-24 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6] overflow-hidden -z-10">
           {fondoBrochazos && (
             <img 
@@ -188,7 +136,6 @@ export default function App() {
               alt="" 
               className="absolute top-1/2 left-0 w-64 md:w-80 transform -translate-y-1/2 -translate-x-1/4 pointer-events-none mix-blend-multiply"
               style={{
-                /* Difuminado suave solo hacia la derecha para fundirse con el blanco */
                 maskImage: 'linear-gradient(to right, black 40%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to right, black 40%, transparent 100%)'
               }}
@@ -198,14 +145,12 @@ export default function App() {
 
         <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between relative z-10">
           <a href="#inicio" className="flex items-center gap-3">
-            {/* Texto del logo más oscuro y grueso */}
             <div className="text-lg md:text-xl font-serif text-[#2A1C1C] font-medium tracking-[0.15em] uppercase drop-shadow-md">
               {textos.nombre_marca || "ALBA GARCÍA"}
             </div>
           </a>
 
           <nav className="hidden md:flex space-x-10">
-            {/* Textos del menú de escritorio más oscuros y gruesos */}
             <a href="#inicio" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Inicio</a>
             <a href="#sobre-mi" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Sobre mí</a>
             <a href="#portfolio" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Portfolio</a>
@@ -213,7 +158,6 @@ export default function App() {
             <a href="#contacto" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Contacto</a>
           </nav>
 
-          {/* Botón hamburguesa móvil oscuro para que se vea */}
           <button className="md:hidden text-[#2A1C1C] drop-shadow-md z-50" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -221,7 +165,6 @@ export default function App() {
 
         {isMenuOpen && (
           <nav className="md:hidden bg-[#FFF9F9] border-b border-[#F0E6E6] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full top-20">
-            {/* Menú desplegado en móvil */}
             <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D]">Inicio</a>
             <a href="#sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D]">Sobre mí</a>
             <a href="#portfolio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D]">Portfolio</a>
@@ -234,7 +177,6 @@ export default function App() {
       <section id="inicio" className="pt-32 md:pt-40 lg:pt-40 lg:min-h-screen flex items-center relative z-10">
         <div className="max-w-6xl mx-auto px-6 pb-12 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-4 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6 relative">
-            
             {fondoBrochazos && (
               <img 
                 src={fondoBrochazos} 
@@ -246,7 +188,6 @@ export default function App() {
                 }}
               />
             )}
-            
             {textos.logo && (
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
@@ -409,26 +350,16 @@ export default function App() {
           </div>
 
           <form 
-            onSubmit={handleSubmit}
+            // AL QUITAR EL onSubmit Y PONER action/method FORZAMOS LA CONFIRMACIÓN EN FORMSUBMIT
+            action={`https://formsubmit.co/${correoDestino}`}
+            method="POST"
             onChange={checkFormValidity}
             className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/20 shadow-xl relative"
           >
-            {formStatus === 'enviando' && (
-              <div className="mb-8 p-4 bg-white/10 border border-white/30 text-white text-center rounded flex items-center justify-center gap-3">
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                Enviando solicitud...
-              </div>
-            )}
-            {formStatus === 'exito' && (
-              <div className="mb-8 p-4 bg-green-500/20 border border-green-400 text-white text-center rounded">
-                ¡Mensaje enviado con éxito! Alba se pondrá en contacto contigo muy pronto.
-              </div>
-            )}
-            {formStatus === 'error' && (
-              <div className="mb-8 p-4 bg-red-500/30 border border-red-400 text-white text-center rounded">
-                Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo o escríbenos directamente al correo.
-              </div>
-            )}
+            {/* CAMPOS OCULTOS PARA CONFIGURAR EL CORREO DE FORMSUBMIT */}
+            <input type="hidden" name="_subject" value="NUEVA SOLICITUD DE PRESUPUESTO - WEB" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 relative z-10">
               <div className="md:col-span-2">
@@ -478,15 +409,15 @@ export default function App() {
 
             <button 
               type="submit" 
-              disabled={!isFormValid || formStatus === 'enviando'}
+              disabled={!isFormValid}
               className={`w-full px-10 py-5 font-medium tracking-widest uppercase text-sm transition-all flex items-center justify-center gap-4 relative z-10 ${
-                isFormValid && formStatus !== 'enviando'
+                isFormValid
                   ? 'bg-white text-[#B07D7D] hover:bg-[#FFF9F9] cursor-pointer shadow-lg' 
                   : 'bg-white/20 text-white/50 cursor-not-allowed'
               }`}
             >
-              {formStatus === 'enviando' ? "Enviando..." : (isFormValid ? "Enviar solicitud" : "Rellena los datos para enviar")} 
-              {formStatus !== 'enviando' && <ArrowRight size={18} />}
+              {isFormValid ? "Enviar solicitud" : "Rellena los datos para enviar"} 
+              <ArrowRight size={18} />
             </button>
           </form>
 
