@@ -106,7 +106,6 @@ export default function App() {
       });
   }, []);
 
-  // Función 1: Vigila el formulario para encender el botón en tiempo real
   const checkFormValidity = (e) => {
     const form = e.currentTarget;
     const nombre = form.querySelector('input[name="Nombre"]')?.value || '';
@@ -122,7 +121,6 @@ export default function App() {
     );
   };
 
-  // Función 2 (La que faltaba): Bloquea el envío si se intenta enviar sin servicios
   const validarFormulario = (e) => {
     const form = e.currentTarget;
     const checkboxes = form.querySelectorAll('input[name="Servicios solicitados"]');
@@ -135,27 +133,27 @@ export default function App() {
     }
   };
 
-  // Variable auxiliar para el fondo dinámico de brochazos
   const fondoBrochazos = getDirectDriveUrl(textos.fondo_brochazos);
 
   return (
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
       
-      {/* ─── BROCHAZOS DE FONDO GENERALES ─── */}
+      {/* ─── BROCHAZOS DE FONDO GENERALES (mix-blend-multiply para quitar el blanco) ─── */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.06] z-0 bg-repeat bg-[size:1000px_auto]"
+        className="absolute inset-0 pointer-events-none opacity-[0.06] z-0 bg-repeat bg-[size:1000px_auto] mix-blend-multiply"
         style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
       ></div>
 
       {/* Header / Navbar */}
       <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6]">
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           <a href="#inicio" className="flex items-center gap-3">
             {textos.logo ? (
+              // Aumento considerable del tamaño del logo (h-16 a h-24 y escalado)
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
                 alt="ALBA GARCÍA VILLARREAL" 
-                className="h-12 md:h-16 w-auto object-contain"
+                className="h-16 md:h-24 w-auto object-contain py-2 transform origin-left scale-110 md:scale-125 mix-blend-multiply"
               />
             ) : (
               <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
@@ -178,7 +176,7 @@ export default function App() {
         </div>
 
         {isMenuOpen && (
-          <nav className="md:hidden bg-[#FFF9F9] border-t border-[#F0E6E6] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full">
+          <nav className="md:hidden bg-[#FFF9F9] border-t border-[#F0E6E6] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full mt-4">
             <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Inicio</a>
             <a href="#sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Sobre mí</a>
             <a href="#portfolio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Portfolio</a>
@@ -189,7 +187,7 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="pt-32 lg:pt-0 lg:min-h-screen flex items-center relative overflow-hidden z-10">
+      <section id="inicio" className="pt-32 md:pt-40 lg:pt-0 lg:min-h-screen flex items-center relative overflow-hidden z-10">
         
         {/* Manchas de acuarela */}
         <div className="absolute top-1/4 right-0 w-[40rem] h-[40rem] bg-gradient-to-tr from-[#F2D1C9] via-[#D3E5E1] to-[#E3C6D3] rounded-full opacity-[0.25] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
@@ -217,9 +215,9 @@ export default function App() {
             </div>
           </div>
           <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-4 lg:pt-0">
-            {/* Marco de pintura de fondo */}
+            {/* Marco de pintura de fondo con mix-blend-multiply */}
             <div 
-              className="absolute -top-6 -right-6 w-32 h-32 bg-no-repeat bg-contain opacity-40 pointer-events-none"
+              className="absolute -top-6 -right-6 w-32 h-32 bg-no-repeat bg-contain opacity-40 pointer-events-none mix-blend-multiply"
               style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
             ></div>
             <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#F0E6E6] shadow-2xl z-10 p-3 bg-white">
@@ -230,7 +228,7 @@ export default function App() {
               />
             </div>
             <div 
-              className="absolute -bottom-8 -left-8 w-44 h-44 bg-no-repeat bg-contain opacity-40 pointer-events-none transform rotate-45"
+              className="absolute -bottom-8 -left-8 w-44 h-44 bg-no-repeat bg-contain opacity-40 pointer-events-none transform rotate-45 mix-blend-multiply"
               style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
             ></div>
           </div>
@@ -240,9 +238,9 @@ export default function App() {
       {/* SOBRE MI SECTION */}
       <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
         
-        {/* Pincelada cruzada */}
+        {/* Pincelada cruzada con mix-blend */}
         <div 
-          className="absolute -right-20 top-1/4 w-[35rem] h-[35rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform -rotate-12"
+          className="absolute -right-20 top-1/4 w-[35rem] h-[35rem] bg-no-repeat bg-contain opacity-[0.08] pointer-events-none transform -rotate-12 mix-blend-multiply"
           style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
         ></div>
 
@@ -284,7 +282,7 @@ export default function App() {
       <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6] relative z-10 overflow-hidden">
         
         <div 
-          className="absolute -left-20 top-0 w-[24rem] h-[24rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform -rotate-45"
+          className="absolute -left-20 top-0 w-[24rem] h-[24rem] bg-no-repeat bg-contain opacity-[0.08] pointer-events-none transform -rotate-45 mix-blend-multiply"
           style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
         ></div>
 
@@ -319,7 +317,7 @@ export default function App() {
       <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
         
         <div 
-          className="absolute -right-20 top-1/3 w-[30rem] h-[30rem] bg-no-repeat bg-contain opacity-[0.04] pointer-events-none transform"
+          className="absolute -right-20 top-1/3 w-[30rem] h-[30rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform mix-blend-multiply"
           style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
         ></div>
 
@@ -337,7 +335,7 @@ export default function App() {
               item.Servicio && (
                 <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full rounded-lg relative overflow-hidden">
                   <div 
-                    className="absolute -top-12 -right-12 w-28 h-28 bg-no-repeat bg-contain opacity-[0.08] pointer-events-none transform -rotate-12"
+                    className="absolute -top-12 -right-12 w-28 h-28 bg-no-repeat bg-contain opacity-[0.08] pointer-events-none transform -rotate-12 mix-blend-multiply"
                     style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
                   ></div>
                   
@@ -359,14 +357,15 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section */}
+      {/* Contacto Section con Formulario Integrado */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
         
-        {/* Acuarela pastel para romper la dureza del fondo oscuro */}
         <div className="absolute top-0 right-0 w-[45rem] h-[45rem] bg-gradient-to-bl from-[#FCDED9] via-[#EAE1E8] to-transparent opacity-[0.18] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
         <div className="absolute bottom-0 left-0 w-[35rem] h-[35rem] bg-gradient-to-tr from-[#ECDEC9] to-transparent opacity-[0.12] blur-2xl pointer-events-none -ml-40 -mb-40"></div>
+        
+        {/* LA SOLUCIÓN AQUÍ: mix-blend-multiply quita el fondo blanco del bloque de pintura en el footer */}
         <div 
-          className="absolute right-10 bottom-10 w-[24rem] h-[24rem] bg-no-repeat bg-contain opacity-[0.12] pointer-events-none transform rotate-180"
+          className="absolute right-10 bottom-10 w-[24rem] h-[24rem] bg-no-repeat bg-contain opacity-[0.35] pointer-events-none transform rotate-180 mix-blend-multiply"
           style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
         ></div>
 
