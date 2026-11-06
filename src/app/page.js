@@ -143,7 +143,7 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           <a href="#inicio" className="flex items-center gap-3">
             <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
-              {textos.nombre_marca || "MAKEUP ALBA"}
+              {textos.nombre_marca || "ALBA MAKEUP"}
             </div>
           </a>
           
@@ -172,47 +172,51 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="pt-32 md:pt-40 lg:pt-40 lg:min-h-screen flex items-center relative overflow-hidden z-10">
-        
-        {/* BROCHAZO DECORATIVO: Esquina superior izquierda y Esquina inferior derecha */}
-        {fondoBrochazos && (
-          <>
-            <img src={fondoBrochazos} alt="" className="absolute top-0 left-0 w-80 md:w-[35rem] opacity-60 pointer-events-none mix-blend-multiply -translate-x-1/4 -translate-y-1/4 transform -scale-x-100" />
-            <img src={fondoBrochazos} alt="" className="absolute bottom-0 right-0 w-80 md:w-[35rem] opacity-60 pointer-events-none mix-blend-multiply translate-x-1/4 translate-y-1/4" />
-          </>
-        )}
-
+      <section id="inicio" className="pt-32 md:pt-40 lg:pt-40 lg:min-h-screen flex items-center relative z-10">
         <div className="max-w-6xl mx-auto px-6 pb-12 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-4 lg:mt-0">
-          <div className="flex-1 text-center lg:text-left space-y-6">
+          
+          <div className="flex-1 text-center lg:text-left space-y-6 relative">
             
-            {/* LOGO EN GRANDE (Sin fondo) */}
+            {/* BROCHAZO HERO: Enmarcando el logo y el texto, sin salirse de la caja izquierda */}
+            {fondoBrochazos && (
+              <img 
+                src={fondoBrochazos} 
+                alt="" 
+                className="absolute top-1/2 left-1/2 w-full max-w-[500px] opacity-40 pointer-events-none mix-blend-multiply transform -translate-x-1/2 -translate-y-1/2 -z-10" 
+              />
+            )}
+
+            {/* LOGO EN GRANDE */}
             {textos.logo && (
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
                 alt="Logo Alba García Villarreal" 
-                className="mx-auto lg:mx-0 w-64 md:w-80 lg:w-96 h-auto object-contain mb-6 mix-blend-multiply"
+                className="mx-auto lg:mx-0 w-64 md:w-80 lg:w-96 h-auto object-contain mb-6 mix-blend-multiply relative z-10"
               />
             )}
 
-            <span className="text-[#D9B3B3] font-medium tracking-[0.3em] uppercase text-xs block">
-              {textos.hero_subtitulo || "Make Up Artist"}
-            </span>
-            <h1 className="text-5xl lg:text-7xl font-serif text-[#4A3C3C] leading-tight">
-              {textos.hero_titulo_1 || "Realza tu"} <br/>
-              <span className="text-[#B07D7D] italic pr-4 inline-block transform hover:scale-[1.03] transition-transform duration-300">{textos.hero_titulo_2 || "belleza natural"}</span>
-            </h1>
-            <p className="text-[#4A3C3C]/70 text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
-              {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
-            </p>
-            <div className="pt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
-              <a href="#contacto" className="bg-[#B07D7D] text-white px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#8F6363] transition-all shadow-lg flex items-center gap-3">
-                Solicitar Presupuesto <ArrowRight size={16} />
-              </a>
-              <a href="#portfolio" className="text-[#B07D7D] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm border border-[#B07D7D] hover:bg-[#B07D7D]/5 transition-all">
-                Ver Trabajos
-              </a>
+            <div className="relative z-10">
+              <span className="text-[#D9B3B3] font-medium tracking-[0.3em] uppercase text-xs block mb-4">
+                {textos.hero_subtitulo || "Make Up Artist"}
+              </span>
+              <h1 className="text-5xl lg:text-7xl font-serif text-[#4A3C3C] leading-tight mb-4">
+                {textos.hero_titulo_1 || "Realza tu"} <br/>
+                <span className="text-[#B07D7D] italic pr-4 inline-block transform hover:scale-[1.03] transition-transform duration-300">{textos.hero_titulo_2 || "belleza natural"}</span>
+              </h1>
+              <p className="text-[#4A3C3C]/70 text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed mb-8">
+                {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
+                <a href="#contacto" className="bg-[#B07D7D] text-white px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#8F6363] transition-all shadow-lg flex items-center gap-3">
+                  Solicitar Presupuesto <ArrowRight size={16} />
+                </a>
+                <a href="#portfolio" className="text-[#B07D7D] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm border border-[#B07D7D] hover:bg-[#B07D7D]/5 transition-all">
+                  Ver Trabajos
+                </a>
+              </div>
             </div>
           </div>
+
           <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-4 lg:pt-0">
             <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#F0E6E6] shadow-2xl z-10 p-3 bg-white">
               <img 
@@ -226,13 +230,7 @@ export default function App() {
       </section>
 
       {/* SOBRE MI SECTION */}
-      <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
-        
-        {/* BROCHAZO DECORATIVO: Esquina superior derecha, asomando */}
-        {fondoBrochazos && (
-          <img src={fondoBrochazos} alt="" className="absolute top-0 right-0 w-72 md:w-[28rem] opacity-50 pointer-events-none mix-blend-multiply translate-x-1/3 -translate-y-1/4 transform rotate-12" />
-        )}
-
+      <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="w-full lg:w-5/12">
@@ -268,13 +266,7 @@ export default function App() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6] relative z-10 overflow-hidden">
-        
-        {/* BROCHAZO DECORATIVO: Esquina inferior izquierda, asomando */}
-        {fondoBrochazos && (
-          <img src={fondoBrochazos} alt="" className="absolute bottom-0 left-0 w-72 md:w-[28rem] opacity-50 pointer-events-none mix-blend-multiply -translate-x-1/3 translate-y-1/4 transform -scale-x-100" />
-        )}
-
+      <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6] relative z-10">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
@@ -303,13 +295,7 @@ export default function App() {
       </section>
 
       {/* Servicios Section */}
-      <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
-        
-        {/* BROCHAZO DECORATIVO: Esquina superior derecha, asomando */}
-        {fondoBrochazos && (
-          <img src={fondoBrochazos} alt="" className="absolute top-0 right-0 w-72 md:w-[30rem] opacity-50 pointer-events-none mix-blend-multiply translate-x-1/4 -translate-y-1/4" />
-        )}
-
+      <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
@@ -323,6 +309,16 @@ export default function App() {
             {servicesData.map((item, index) => (
               item.Servicio && (
                 <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full rounded-lg relative overflow-hidden">
+                  
+                  {/* BROCHAZO EN LA TARJETA DE SERVICIOS: Pequeño, en la esquina superior derecha */}
+                  {fondoBrochazos && (
+                    <img 
+                      src={fondoBrochazos} 
+                      alt="" 
+                      className="absolute -top-6 -right-6 w-32 opacity-[0.15] pointer-events-none mix-blend-multiply transform rotate-45" 
+                    />
+                  )}
+
                   <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors relative z-10">
                     <Sparkles size={32} strokeWidth={1.5} />
                   </div>
@@ -341,12 +337,16 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section con Formulario Integrado (SIN BROCHAZOS DE FONDO) */}
+      {/* Contacto Section con Formulario Integrado */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
         
-        {/* Acuarela sutil para darle volumen al fondo rosa oscuro */}
-        <div className="absolute top-0 right-0 w-[45rem] h-[45rem] bg-gradient-to-bl from-[#FCDED9] via-[#EAE1E8] to-transparent opacity-[0.15] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
-        <div className="absolute bottom-0 left-0 w-[35rem] h-[35rem] bg-gradient-to-tr from-[#ECDEC9] to-transparent opacity-[0.1] blur-2xl pointer-events-none -ml-40 -mb-40"></div>
+        {/* BROCHAZOS DECORATIVOS DEL FORMULARIO */}
+        {fondoBrochazos && (
+          <>
+            <img src={fondoBrochazos} alt="" className="absolute top-10 left-10 w-96 opacity-10 pointer-events-none mix-blend-screen transform -rotate-12" />
+            <img src={fondoBrochazos} alt="" className="absolute bottom-10 right-10 w-96 opacity-10 pointer-events-none mix-blend-screen transform rotate-180" />
+          </>
+        )}
 
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
