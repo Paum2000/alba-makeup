@@ -236,7 +236,12 @@ export default function App() {
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
                 alt="Logo Alba García Villarreal" 
-                className="mx-auto lg:mx-0 w-64 md:w-80 lg:w-96 h-auto object-contain mb-6 mix-blend-multiply relative z-10"
+                className="mx-auto lg:mx-0 w-72 md:w-96 lg:w-[450px] h-auto object-contain mb-8 mix-blend-multiply relative z-10 hover:scale-105 transition-transform duration-700"
+                style={{
+                  // Esto crea un difuminado ovalado transparente, haciendo que los brochazos se fundan sin usar colores negros
+                  maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 95%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 60%, transparent 95%)'
+                }}
               />
             )}
             <div className="relative z-10">
