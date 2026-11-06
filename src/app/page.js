@@ -179,16 +179,46 @@ export default function App() {
         </div>
       </section>
 
-      {/* SOBRE MI SECTION */}
+      {/* SOBRE MI SECTION REDISEÑADO */}
       <section id="sobre-mi" className="py-24 bg-white border-t border-[#EBDDD5]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-serif text-[#59111E] mb-4">{textos.sobre_mi_titulo || "Sobre mí"}</h2>
-          <div className="w-12 h-[1px] bg-[#B98370] mx-auto mb-10"></div>
-          
-          <div className="bg-[#F9F6F0] p-10 md:p-14 shadow-sm border border-[#EBDDD5] text-left">
-            <p className="text-[#2C1E16]/80 font-light text-lg leading-relaxed whitespace-pre-line">
-              {textos.sobre_mi_texto || "Apasionada del arte y de la moda. Comienzo mi formación en el año 2011 en la escuela profesional de maquillaje DNI School..."}
-            </p>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
+            
+            {/* Foto de la izquierda */}
+            <div className="w-full lg:w-5/12">
+              <div className="aspect-[4/5] relative overflow-hidden shadow-2xl border border-[#EBDDD5] p-3 bg-[#F9F6F0]">
+                <img 
+                  src={getDirectDriveUrl(textos.imagen_sobre_mi) || "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&q=80&w=800"} 
+                  alt="Alba maquillando" 
+                  className="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-700"
+                />
+              </div>
+            </div>
+
+            {/* Textos de la derecha */}
+            <div className="w-full lg:w-7/12 flex flex-col justify-center text-center lg:text-left">
+              <h2 className="text-5xl md:text-6xl font-serif text-[#59111E] mb-6 italic">
+                {textos.sobre_mi_titulo || "Sobre mí"}
+              </h2>
+              
+              <h3 className="text-xl md:text-2xl font-serif text-[#2C1E16] mb-8 leading-relaxed tracking-wide uppercase">
+                {textos.sobre_mi_destacado || "Más de 15 años dedicada al mundo de la belleza, el maquillaje y el asesoramiento personalizado."}
+              </h3>
+              
+              <div className="w-12 h-[1px] bg-[#B98370] mx-auto lg:mx-0 mb-8"></div>
+              
+              <div className="text-[#2C1E16]/80 font-light text-base md:text-lg leading-relaxed whitespace-pre-line space-y-6">
+                <p>
+                  {textos.sobre_mi_texto || "Desde 2011, mi pasión por el maquillaje me ha llevado a formarme, crecer y trabajar en distintas áreas del sector, siempre con un mismo objetivo: potenciar la belleza real de cada persona.\n\nA lo largo de mi trayectoria he formado parte de grandes firmas como Sephora, Benefit Cosmetics (donde me especialicé como Brow Expert en diseño y cuidado de cejas) y L'Oréal Professionnel, experiencias que han enriquecido mi técnica, mi visión de la belleza y mi asesoramiento profesional.\n\nActualmente, soy Makeup Artist para Charlotte Tilbury, una firma con la que comparto la pasión por un maquillaje sofisticado, favorecedor y con un enfoque real de la belleza."}
+                </p>
+              </div>
+
+              <div className="pt-10 mt-10 border-t border-[#EBDDD5]">
+                <p className="text-[#59111E] font-serif text-2xl italic">
+                  "{textos.sobre_mi_cita || "Mi trabajo es escuchar, asesorar y crear maquillajes que te hagan sentir tú, pero en tu mejor versión."}"
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -199,7 +229,7 @@ export default function App() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#59111E] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
             <p className="text-[#2C1E16]/60 font-light max-w-2xl mx-auto">
-              {textos.portfolio_descripcion || "Una pequeña muestra de mis últimos trabajos."}
+              {textos.portfolio_descripcion || "Un recorrido por mi visión del maquillaje. Arte, técnica y tendencias."}
             </p>
             <div className="w-12 h-[1px] bg-[#B98370] mx-auto mt-6"></div>
           </div>
@@ -211,7 +241,6 @@ export default function App() {
                   <div className="aspect-[3/4] overflow-hidden bg-[#2C1E16] flex items-center justify-center relative z-0">
                     {renderMedia(item)}
                   </div>
-                  {/* CAMBIO APLICADO: Degradado solo en la mitad inferior (h-1/2) */}
                   <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2C1E16]/90 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none z-10">
                     <span className="text-[#B98370] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
                     <h3 className="text-[#F9F6F0] text-2xl font-serif">{item.Título}</h3>
@@ -223,7 +252,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Servicios Section */}
+      {/* Servicios Section (REVISADO: SIN PRECIOS) */}
       <section id="servicios" className="py-24 bg-white border-t border-[#EBDDD5]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -244,9 +273,11 @@ export default function App() {
                   <h3 className="text-2xl font-serif text-[#2C1E16] mb-4">{item.Servicio}</h3>
                   <p className="text-[#2C1E16]/70 font-light mb-8 leading-relaxed flex-grow">{item['Descripción']}</p>
                   
-                  <div className="pt-6 border-t border-[#EBDDD5] flex items-center justify-between mt-auto">
-                    <span className="text-[#59111E] font-serif text-xl italic">{item['Precio Base']}</span>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors">Reservar</a>
+                  {/* AQUÍ EL CAMBIO: Botón alargado de consultar disponibilidad */}
+                  <div className="pt-6 border-t border-[#EBDDD5] flex items-center justify-end mt-auto">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors flex items-center gap-2">
+                      Consultar disponibilidad <ArrowRight size={14} />
+                    </a>
                   </div>
                 </div>
               )
