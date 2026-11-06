@@ -213,7 +213,7 @@ export default function App() {
                     {/* Llamamos a la función mágica que hemos creado arriba */}
                     {renderMedia(item)}
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8 pointer-events-none">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/40 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none">
                     <span className="text-[#B98370] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
                     <h3 className="text-[#F9F6F0] text-2xl font-serif">{item.Título}</h3>
                   </div>
