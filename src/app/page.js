@@ -138,18 +138,12 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
       
-      {/* ─── BROCHAZOS DE FONDO GENERALES: Opacidad reducida ─── */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.03] z-0 bg-repeat bg-[size:800px_auto] mix-blend-multiply"
-        style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
-      ></div>
-
       {/* Header / Navbar */}
       <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6]">
         <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           <a href="#inicio" className="flex items-center gap-3">
             <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
-              {textos.nombre_marca || "ALBA MAKEUP"}
+              {textos.nombre_marca || "MAKEUP ALBA"}
             </div>
           </a>
           
@@ -178,17 +172,20 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      {/* SOLUCIÓN AL CORTE DEL LOGO: Añadido pt-32 y lg:pt-40 para empujar el contenido hacia abajo, debajo del menú flotante */}
       <section id="inicio" className="pt-32 md:pt-40 lg:pt-40 lg:min-h-screen flex items-center relative overflow-hidden z-10">
         
-        {/* Manchas de acuarela */}
-        <div className="absolute top-1/4 right-0 w-[40rem] h-[40rem] bg-gradient-to-tr from-[#F2D1C9] via-[#D3E5E1] to-[#E3C6D3] rounded-full opacity-[0.25] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
-        <div className="absolute -bottom-20 -left-20 w-[30rem] h-[30rem] bg-gradient-to-tr from-[#EAD9D5] to-[#E3D3C3] rounded-full opacity-[0.2] blur-2xl pointer-events-none"></div>
+        {/* BROCHAZO DECORATIVO: Esquina superior izquierda y Esquina inferior derecha */}
+        {fondoBrochazos && (
+          <>
+            <img src={fondoBrochazos} alt="" className="absolute top-0 left-0 w-80 md:w-[35rem] opacity-60 pointer-events-none mix-blend-multiply -translate-x-1/4 -translate-y-1/4 transform -scale-x-100" />
+            <img src={fondoBrochazos} alt="" className="absolute bottom-0 right-0 w-80 md:w-[35rem] opacity-60 pointer-events-none mix-blend-multiply translate-x-1/4 translate-y-1/4" />
+          </>
+        )}
 
         <div className="max-w-6xl mx-auto px-6 pb-12 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-4 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6">
             
-            {/* LOGO en grande */}
+            {/* LOGO EN GRANDE (Sin fondo) */}
             {textos.logo && (
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
@@ -231,13 +228,12 @@ export default function App() {
       {/* SOBRE MI SECTION */}
       <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
         
-        {/* Brochazo sutil decorativo en la esquina */}
-        <div 
-          className="absolute -right-10 top-0 w-[20rem] h-[20rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform -rotate-12 mix-blend-multiply"
-          style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
-        ></div>
+        {/* BROCHAZO DECORATIVO: Esquina superior derecha, asomando */}
+        {fondoBrochazos && (
+          <img src={fondoBrochazos} alt="" className="absolute top-0 right-0 w-72 md:w-[28rem] opacity-50 pointer-events-none mix-blend-multiply translate-x-1/3 -translate-y-1/4 transform rotate-12" />
+        )}
 
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="w-full lg:w-5/12">
               <div className="aspect-[4/5] relative overflow-hidden shadow-2xl border border-[#F0E6E6] p-3 bg-[#FFF9F9]">
@@ -273,7 +269,13 @@ export default function App() {
 
       {/* Portfolio Section */}
       <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6] relative z-10 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6">
+        
+        {/* BROCHAZO DECORATIVO: Esquina inferior izquierda, asomando */}
+        {fondoBrochazos && (
+          <img src={fondoBrochazos} alt="" className="absolute bottom-0 left-0 w-72 md:w-[28rem] opacity-50 pointer-events-none mix-blend-multiply -translate-x-1/3 translate-y-1/4 transform -scale-x-100" />
+        )}
+
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
             <p className="text-[#4A3C3C]/60 font-light max-w-2xl mx-auto">
@@ -285,7 +287,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {portfolioData.map((item, index) => (
               item.Imagen_URL && (
-                <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 rounded-lg">
+                <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 rounded-lg bg-white">
                   <div className="aspect-[3/4] overflow-hidden bg-[#4A3C3C] flex items-center justify-center relative z-0">
                     {renderMedia(item)}
                   </div>
@@ -302,7 +304,13 @@ export default function App() {
 
       {/* Servicios Section */}
       <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6">
+        
+        {/* BROCHAZO DECORATIVO: Esquina superior derecha, asomando */}
+        {fondoBrochazos && (
+          <img src={fondoBrochazos} alt="" className="absolute top-0 right-0 w-72 md:w-[30rem] opacity-50 pointer-events-none mix-blend-multiply translate-x-1/4 -translate-y-1/4" />
+        )}
+
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
             <p className="text-[#4A3C3C]/60 font-light max-w-2xl mx-auto">
@@ -333,12 +341,12 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section con Formulario Integrado */}
+      {/* Contacto Section con Formulario Integrado (SIN BROCHAZOS DE FONDO) */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
         
-        {/* Acuarela pastel para romper la dureza del fondo oscuro */}
-        <div className="absolute top-0 right-0 w-[45rem] h-[45rem] bg-gradient-to-bl from-[#FCDED9] via-[#EAE1E8] to-transparent opacity-[0.18] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
-        <div className="absolute bottom-0 left-0 w-[35rem] h-[35rem] bg-gradient-to-tr from-[#ECDEC9] to-transparent opacity-[0.12] blur-2xl pointer-events-none -ml-40 -mb-40"></div>
+        {/* Acuarela sutil para darle volumen al fondo rosa oscuro */}
+        <div className="absolute top-0 right-0 w-[45rem] h-[45rem] bg-gradient-to-bl from-[#FCDED9] via-[#EAE1E8] to-transparent opacity-[0.15] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+        <div className="absolute bottom-0 left-0 w-[35rem] h-[35rem] bg-gradient-to-tr from-[#ECDEC9] to-transparent opacity-[0.1] blur-2xl pointer-events-none -ml-40 -mb-40"></div>
 
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
