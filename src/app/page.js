@@ -125,7 +125,7 @@ export default function App() {
 
   const correoDestino = textos.email || "makeup_al3a@hotmail.com";
 
-  // --- ENVÍO SEGURO CON WEB3FORMS ---
+  // --- FUNCIÓN ADAPTADA AL EJEMPLO EXACTO DE WEB3FORMS ---
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -140,42 +140,29 @@ export default function App() {
 
     setFormStatus('enviando');
     
-    // AQUÍ ESTÁ TU CLAVE
-    const ACCESS_KEY = "58a655be-1946-454b-bc96-02d667722cf0";
-    
-    const datosEnvio = {
-      access_key: ACCESS_KEY,
-      subject: "NUEVA SOLICITUD DE PRESUPUESTO - WEB",
-      from_name: "Web Alba Makeup",
-      Nombre: formData.get("Nombre") || "No indicado",
-      Email: formData.get("Email") || "No indicado",
-      Teléfono: formData.get("Teléfono") || "No indicado",
-      Servicios_solicitados: servicios.join(", "),
-      Fecha_del_evento: formData.get("Fecha") || "No indicada",
-      Mensaje: formData.get("Mensaje") || "Sin mensaje"
-    };
+    // Inyectamos la clave y configuraciones extra al formulario
+    formData.append("access_key", "58a655be-1946-454b-bc96-02d667722cf0");
+    formData.append("subject", "NUEVA SOLICITUD DE PRESUPUESTO - WEB");
+    formData.append("from_name", "Web Alba Makeup");
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(datosEnvio)
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData // Lo enviamos como FormData en lugar de JSON, tal y como piden en su ejemplo
       });
 
-      const result = await response.json();
+      const data = await response.json();
 
-      if (result.success) {
+      if (response.ok && data.success) {
         setFormStatus('exito');
         form.reset();
         setIsFormValid(false);
       } else {
+        console.error("Error de Web3Forms:", data);
         setFormStatus('error');
       }
     } catch (error) {
-      console.error("Error al enviar:", error);
+      console.error("Error al conectar:", error);
       setFormStatus('error');
     }
   };
@@ -260,7 +247,7 @@ export default function App() {
                 {textos.hero_titulo_1 || "Realza tu"} <br/>
                 <span className="text-[#B07D7D] italic pr-4 inline-block transform hover:scale-[1.03] transition-transform duration-300">{textos.hero_titulo_2 || "belleza natural"}</span>
               </h1>
-              <p className="text-[#2A1C1C] text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed mb-8 drop-shadow-sm">
+              <p className="text-[#2A1C1C] text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-medium leading-relaxed mb-8 drop-shadow-sm">
                 {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
