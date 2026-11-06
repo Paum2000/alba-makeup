@@ -198,31 +198,35 @@ export default function App() {
 
         <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between relative z-10">
           <a href="#inicio" className="flex items-center gap-3">
-            <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase drop-shadow-sm">
+            {/* Texto del logo más oscuro y grueso */}
+            <div className="text-lg md:text-xl font-serif text-[#2A1C1C] font-medium tracking-[0.15em] uppercase drop-shadow-md">
               {textos.nombre_marca || "ALBA GARCIA"}
             </div>
           </a>
 
           <nav className="hidden md:flex space-x-10">
-            <a href="#inicio" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Inicio</a>
-            <a href="#sobre-mi" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Sobre mí</a>
-            <a href="#portfolio" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Portfolio</a>
-            <a href="#servicios" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Servicios</a>
-            <a href="#contacto" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Contacto</a>
+            {/* Textos del menú de escritorio más oscuros y gruesos */}
+            <a href="#inicio" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Inicio</a>
+            <a href="#sobre-mi" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Sobre mí</a>
+            <a href="#portfolio" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Portfolio</a>
+            <a href="#servicios" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Servicios</a>
+            <a href="#contacto" className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D] transition-colors drop-shadow-sm">Contacto</a>
           </nav>
 
-          <button className="md:hidden text-[#B07D7D] z-50" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {/* Botón hamburguesa móvil oscuro para que se vea */}
+          <button className="md:hidden text-[#2A1C1C] drop-shadow-md z-50" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
         {isMenuOpen && (
           <nav className="md:hidden bg-[#FFF9F9] border-b border-[#F0E6E6] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full top-20">
-            <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Inicio</a>
-            <a href="#sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Sobre mí</a>
-            <a href="#portfolio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Portfolio</a>
-            <a href="#servicios" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Servicios</a>
-            <a href="#contacto" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Contacto</a>
+            {/* Menú desplegado en móvil */}
+            <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D]">Inicio</a>
+            <a href="#sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D]">Sobre mí</a>
+            <a href="#portfolio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D]">Portfolio</a>
+            <a href="#servicios" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D]">Servicios</a>
+            <a href="#contacto" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2A1C1C] font-medium hover:text-[#B07D7D]">Contacto</a>
           </nav>
         )}
       </header>
