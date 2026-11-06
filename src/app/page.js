@@ -218,7 +218,11 @@ export default function App() {
               <img 
                 src={fondoBrochazos} 
                 alt="" 
-                className="absolute top-1/2 left-1/2 w-full max-w-[500px] pointer-events-none mix-blend-multiply transform -translate-x-1/2 -translate-y-1/2 -z-10" 
+                className="absolute top-1/2 left-1/2 w-full max-w-[500px] pointer-events-none mix-blend-multiply transform -translate-x-1/2 -translate-y-1/2 -z-10 opacity-60" 
+                style={{
+                  maskImage: 'radial-gradient(ellipse, black 40%, transparent 80%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse, black 40%, transparent 80%)'
+                }}
               />
             )}
             {textos.logo && (
@@ -252,7 +256,6 @@ export default function App() {
 
           <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-4 lg:pt-0">
             <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#F0E6E6] shadow-2xl z-10 p-3 bg-white">
-              {/* Aquí mostramos la imagen SOLO cuando ya ha cargado de la hoja de cálculo */}
               {textos.imagen_principal && (
                 <img 
                   src={getDirectDriveUrl(textos.imagen_principal)} 
@@ -270,7 +273,6 @@ export default function App() {
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="w-full lg:w-5/12">
               <div className="aspect-[4/5] relative overflow-hidden shadow-2xl border border-[#F0E6E6] p-3 bg-[#FFF9F9]">
-                {/* Igual aquí, SOLO mostramos la imagen cuando existe */}
                 {textos.imagen_sobre_mi && (
                   <img 
                     src={getDirectDriveUrl(textos.imagen_sobre_mi)} 
@@ -349,7 +351,11 @@ export default function App() {
                     <img 
                       src={fondoBrochazos} 
                       alt="" 
-                      className="absolute -top-6 -right-6 w-32 pointer-events-none mix-blend-multiply transform rotate-45" 
+                      className="absolute -top-6 -right-6 w-36 pointer-events-none mix-blend-multiply transform rotate-45 opacity-60" 
+                      style={{
+                        maskImage: 'radial-gradient(circle, black 30%, transparent 70%)',
+                        WebkitMaskImage: 'radial-gradient(circle, black 30%, transparent 70%)'
+                      }}
                     />
                   )}
                   <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors relative z-10">
