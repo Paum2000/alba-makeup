@@ -38,7 +38,6 @@ function renderMedia(item) {
     return (
       <iframe 
         src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&playsinline=1&rel=0`}
-        // El scale-[1.35] oculta los bordes y el título de YouTube
         className="w-full h-full object-cover pointer-events-none scale-[1.35]"
         allow="autoplay; encrypted-media"
       ></iframe>
@@ -209,11 +208,11 @@ export default function App() {
             {portfolioData.map((item, index) => (
               item.Imagen_URL && (
                 <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
-                  <div className="aspect-[3/4] overflow-hidden bg-[#2C1E16] flex items-center justify-center">
-                    {/* Llamamos a la función mágica que hemos creado arriba */}
+                  <div className="aspect-[3/4] overflow-hidden bg-[#2C1E16] flex items-center justify-center relative z-0">
                     {renderMedia(item)}
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/40 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none">
+                  {/* Aquí está el cambio crucial: opacity-100 para móvil y z-10 para asegurar que esté por encima del vídeo */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/40 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none z-10">
                     <span className="text-[#B98370] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
                     <h3 className="text-[#F9F6F0] text-2xl font-serif">{item.Título}</h3>
                   </div>
