@@ -74,6 +74,9 @@ export default function App() {
   const [servicesData, setServicesData] = useState([]);
   const [textos, setTextos] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
+  
+  // Estado para manejar el mensaje de éxito o error al enviar el formulario
+  const [formStatus, setFormStatus] = useState('');
 
   useEffect(() => {
     const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=0&single=true&output=csv"; 
@@ -121,15 +124,38 @@ export default function App() {
     );
   };
 
-  const validarFormulario = (e) => {
+  // Envío mediante Web3Forms (mucho más robusto y sin bloqueos de servidor)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const form = e.currentTarget;
-    const checkboxes = form.querySelectorAll('input[name="Servicios solicitados"]');
-    if (checkboxes.length > 0) {
-      const isChecked = Array.from(checkboxes).some(cb => cb.checked);
-      if (!isChecked) {
-        e.preventDefault(); 
-        alert("Por favor, selecciona al menos un tipo de servicio de la lista.");
+    
+    // Validar servicios
+    const checkboxes = form.querySelectorAll('input[name="Servicios solicitados"]:checked');
+    if (checkboxes.length === 0) {
+      alert("Por favor, selecciona al menos un tipo de servicio de la lista.");
+      return;
+    }
+
+    const formData = new FormData(form);
+    setFormStatus('enviando');
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFormStatus('exito');
+        form.reset();
+        setIsFormValid(false);
+      } else {
+        setFormStatus('error');
       }
+    } catch (error) {
+      setFormStatus('error');
     }
   };
 
@@ -177,7 +203,7 @@ export default function App() {
           
           <div className="flex-1 text-center lg:text-left space-y-6 relative">
             
-            {/* BROCHAZO HERO: Enmarcando el logo y el texto, sin salirse de la caja izquierda */}
+            {/* BROCHAZO HERO */}
             {fondoBrochazos && (
               <img 
                 src={fondoBrochazos} 
@@ -196,6 +222,7 @@ export default function App() {
             )}
 
             <div className="relative z-10">
+              {/* Subtítulo con color más oscuro para mejor legibilidad */}
               <span className="text-[#B07D7D] font-medium tracking-[0.3em] uppercase text-xs block mb-4">
                 {textos.hero_subtitulo || "Make Up Artist"}
               </span>
@@ -337,8 +364,15 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section con Formulario Integrado */}
+      {/* Contacto Section con Web3Forms */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
+        
+        {fondoBrochazos && (
+          <>
+            <img src={fondoBrochazos} alt="" className="absolute top-10 left-10 w-96 opacity-10 pointer-events-none mix-blend-screen transform -rotate-12" />
+            <img src={fondoBrochazos} alt="" className="absolute bottom-10 right-10 w-96 opacity-10 pointer-events-none mix-blend-screen transform rotate-180" />
+          </>
+        )}
 
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
@@ -349,14 +383,25 @@ export default function App() {
           </div>
           
           <form 
-            action={`https://formsubmit.co/${textos.email || "makeup_al3a@hotmail.com"}`} 
-            method="POST" 
-            onSubmit={validarFormulario}
+            onSubmit={handleSubmit}
             onChange={checkFormValidity}
             className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/20 shadow-xl relative"
           >
-            <input type="hidden" name="_subject" value="¡Nueva solicitud de reserva desde tu web!" />
-            <input type="hidden" name="_template" value="table" />
+            {/* Clave de Web3Forms de Alba (Sustituye esta clave o ponla en tu Excel si prefieres) */}
+            <input type="hidden" name="access_key" value={textos.web3forms_key || "2f91369d-2104-4f51-b855-46bc30bc1135"} />
+            <input type="hidden" name="subject" value="¡Nueva solicitud de reserva desde tu web!" />
+
+            {/* Mensajes de éxito o error al enviar */}
+            {formStatus === 'exito' && (
+              <div className="mb-8 p-4 bg-white/20 border border-white/40 text-white text-center rounded">
+                ¡Mensaje enviado con éxito! Alba se pondrá en contacto contigo muy pronto.
+              </div>
+            )}
+            {formStatus === 'error' && (
+              <div className="mb-8 p-4 bg-red-500/30 border border-red-500 text-white text-center rounded">
+                Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo o escríbenos directamente al correo.
+              </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 relative z-10">
               <div className="md:col-span-2">
@@ -406,14 +451,14 @@ export default function App() {
 
             <button 
               type="submit" 
-              disabled={!isFormValid}
+              disabled={!isFormValid || formStatus === 'enviando'}
               className={`w-full px-10 py-5 font-medium tracking-widest uppercase text-sm transition-all flex items-center justify-center gap-4 relative z-10 ${
-                isFormValid 
+                isFormValid && formStatus !== 'enviando'
                   ? 'bg-white text-[#B07D7D] hover:bg-[#FFF9F9] cursor-pointer shadow-lg' 
                   : 'bg-white/20 text-white/50 cursor-not-allowed'
               }`}
             >
-              {isFormValid ? "Enviar solicitud" : "Rellena los datos para enviar"} <ArrowRight size={18} />
+              {formStatus === 'enviando' ? "Enviando..." : (isFormValid ? "Enviar solicitud" : "Rellena los datos para enviar")} <ArrowRight size={18} />
             </button>
           </form>
 
