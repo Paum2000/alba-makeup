@@ -138,9 +138,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
       
-      {/* ─── BROCHAZOS DE FONDO GENERALES (mix-blend-multiply para quitar el blanco) ─── */}
+      {/* ─── BROCHAZOS DE FONDO GENERALES: Opacidad reducida ─── */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.06] z-0 bg-repeat bg-[size:1000px_auto] mix-blend-multiply"
+        className="absolute inset-0 pointer-events-none opacity-[0.03] z-0 bg-repeat bg-[size:800px_auto] mix-blend-multiply"
         style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
       ></div>
 
@@ -149,11 +149,11 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           <a href="#inicio" className="flex items-center gap-3">
             {textos.logo ? (
-              // Aumento considerable del tamaño del logo (h-16 a h-24 y escalado)
+              // SOLUCIÓN LOGO: Quitamos mix-blend y ajustamos tamaño
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
                 alt="ALBA GARCÍA VILLARREAL" 
-                className="h-16 md:h-24 w-auto object-contain py-2 transform origin-left scale-110 md:scale-125 mix-blend-multiply"
+                className="h-14 md:h-20 w-auto object-contain py-1"
               />
             ) : (
               <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
@@ -215,11 +215,6 @@ export default function App() {
             </div>
           </div>
           <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-4 lg:pt-0">
-            {/* Marco de pintura de fondo con mix-blend-multiply */}
-            <div 
-              className="absolute -top-6 -right-6 w-32 h-32 bg-no-repeat bg-contain opacity-40 pointer-events-none mix-blend-multiply"
-              style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
-            ></div>
             <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#F0E6E6] shadow-2xl z-10 p-3 bg-white">
               <img 
                 src={getDirectDriveUrl(textos.imagen_principal) || "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800"} 
@@ -227,10 +222,6 @@ export default function App() {
                 className="w-full h-full object-cover object-center"
               />
             </div>
-            <div 
-              className="absolute -bottom-8 -left-8 w-44 h-44 bg-no-repeat bg-contain opacity-40 pointer-events-none transform rotate-45 mix-blend-multiply"
-              style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
-            ></div>
           </div>
         </div>
       </section>
@@ -238,9 +229,9 @@ export default function App() {
       {/* SOBRE MI SECTION */}
       <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
         
-        {/* Pincelada cruzada con mix-blend */}
+        {/* SOLUCIÓN: Brochazo sutil decorativo en la esquina */}
         <div 
-          className="absolute -right-20 top-1/4 w-[35rem] h-[35rem] bg-no-repeat bg-contain opacity-[0.08] pointer-events-none transform -rotate-12 mix-blend-multiply"
+          className="absolute -right-10 top-0 w-[20rem] h-[20rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform -rotate-12 mix-blend-multiply"
           style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
         ></div>
 
@@ -281,11 +272,6 @@ export default function App() {
       {/* Portfolio Section */}
       <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6] relative z-10 overflow-hidden">
         
-        <div 
-          className="absolute -left-20 top-0 w-[24rem] h-[24rem] bg-no-repeat bg-contain opacity-[0.08] pointer-events-none transform -rotate-45 mix-blend-multiply"
-          style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
-        ></div>
-
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
@@ -316,11 +302,6 @@ export default function App() {
       {/* Servicios Section */}
       <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10 overflow-hidden">
         
-        <div 
-          className="absolute -right-20 top-1/3 w-[30rem] h-[30rem] bg-no-repeat bg-contain opacity-[0.05] pointer-events-none transform mix-blend-multiply"
-          style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
-        ></div>
-
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
@@ -334,11 +315,6 @@ export default function App() {
             {servicesData.map((item, index) => (
               item.Servicio && (
                 <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full rounded-lg relative overflow-hidden">
-                  <div 
-                    className="absolute -top-12 -right-12 w-28 h-28 bg-no-repeat bg-contain opacity-[0.08] pointer-events-none transform -rotate-12 mix-blend-multiply"
-                    style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
-                  ></div>
-                  
                   <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors relative z-10">
                     <Sparkles size={32} strokeWidth={1.5} />
                   </div>
@@ -357,17 +333,12 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section con Formulario Integrado */}
+      {/* Contacto Section con Formulario Integrado (SOLUCIÓN: SIN BROCHAZOS DE FONDO) */}
       <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
         
+        {/* Acuarela pastel para romper la dureza del fondo oscuro */}
         <div className="absolute top-0 right-0 w-[45rem] h-[45rem] bg-gradient-to-bl from-[#FCDED9] via-[#EAE1E8] to-transparent opacity-[0.18] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
         <div className="absolute bottom-0 left-0 w-[35rem] h-[35rem] bg-gradient-to-tr from-[#ECDEC9] to-transparent opacity-[0.12] blur-2xl pointer-events-none -ml-40 -mb-40"></div>
-        
-        {/* LA SOLUCIÓN AQUÍ: mix-blend-multiply quita el fondo blanco del bloque de pintura en el footer */}
-        <div 
-          className="absolute right-10 bottom-10 w-[24rem] h-[24rem] bg-no-repeat bg-contain opacity-[0.35] pointer-events-none transform rotate-180 mix-blend-multiply"
-          style={{ backgroundImage: fondoBrochazos ? `url('${fondoBrochazos}')` : "none" }}
-        ></div>
 
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
