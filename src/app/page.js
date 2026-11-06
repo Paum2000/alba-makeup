@@ -75,6 +75,7 @@ export default function App() {
   const [servicesData, setServicesData] = useState([]);
   const [textos, setTextos] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const [formStatus, setFormStatus] = useState('');
 
   useEffect(() => {
     const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_Pw7kre_NwHu1Gabsty2O9SKJRYjTzLk1u0Tku9PCfFIA6Tbz-ckPk3UeyiXLs4CcNbbGOb_lZdQ9/pub?gid=0&single=true&output=csv"; 
@@ -122,11 +123,69 @@ export default function App() {
     );
   };
 
-  const fondoBrochazos = getDirectDriveUrl(textos.fondo_brochazos);
   const correoDestino = textos.email || "paum2000@gmail.com";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const servicios = formData.getAll("Servicios solicitados");
+
+    if (servicios.length === 0) {
+      alert("Por favor, selecciona al menos un tipo de servicio de la lista.");
+      return;
+    }
+
+    setFormStatus('enviando');
+    
+    const datosEnvio = {
+      Nombre: formData.get("Nombre") || "No indicado",
+      Email: formData.get("Email") || "No indicado",
+      Teléfono: formData.get("Teléfono") || "No indicado",
+      Servicios: servicios.join(", "),
+      Fecha: formData.get("Fecha") || "No indicada",
+      Mensaje: formData.get("Mensaje") || "Sin mensaje",
+      _subject: "NUEVA SOLICITUD DE PRESUPUESTO - WEB",
+      _template: "table"
+    };
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${correoDestino}`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(datosEnvio)
+      });
+
+      if (response.ok) {
+        setFormStatus('exito');
+        form.reset();
+        setIsFormValid(false);
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      console.error("Error al enviar:", error);
+      setFormStatus('error');
+    }
+  };
+
+  const fondoBrochazos = getDirectDriveUrl(textos.fondo_brochazos);
 
   return (
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
+
+      {/* --- INICIO BOTÓN DE EMERGENCIA --- */}
+      <form action={`https://formsubmit.co/${correoDestino}`} method="POST" target="_blank" className="relative z-[9999] pt-32 pb-4 text-center">
+          <input type="hidden" name="Prueba" value="Activacion" />
+          <button type="submit" className="bg-red-600 text-white px-8 py-4 font-bold text-xl rounded shadow-2xl hover:bg-red-700 cursor-pointer animate-pulse border-4 border-red-800">
+              🚨 BOTÓN DE EMERGENCIA: ACTIVAR CORREO 🚨
+          </button>
+      </form>
+      {/* --- FIN BOTÓN DE EMERGENCIA (Bórralo cuando lo actives) --- */}
 
       <header className="fixed w-full top-0 z-50">
         <div className="absolute top-0 left-0 w-full h-20 md:h-24 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6] overflow-hidden -z-10">
@@ -174,9 +233,10 @@ export default function App() {
         )}
       </header>
 
-      <section id="inicio" className="pt-32 md:pt-40 lg:pt-40 lg:min-h-screen flex items-center relative z-10">
+      <section id="inicio" className="pt-10 md:pt-20 lg:pt-20 lg:min-h-screen flex items-center relative z-10">
         <div className="max-w-6xl mx-auto px-6 pb-12 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-4 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6 relative">
+            
             {fondoBrochazos && (
               <img 
                 src={fondoBrochazos} 
@@ -188,6 +248,7 @@ export default function App() {
                 }}
               />
             )}
+            
             {textos.logo && (
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
@@ -199,18 +260,18 @@ export default function App() {
               <span className="text-[#4A3C3C] font-medium tracking-[0.3em] uppercase text-xs block mb-4">
                 {textos.hero_subtitulo || "Make Up Artist"}
               </span>
-              <h1 className="text-5xl lg:text-7xl font-serif text-[#4A3C3C] leading-tight mb-4">
+              <h1 className="text-5xl lg:text-7xl font-serif text-[#4A3C3C] leading-tight mb-4 drop-shadow-sm">
                 {textos.hero_titulo_1 || "Realza tu"} <br/>
                 <span className="text-[#B07D7D] italic pr-4 inline-block transform hover:scale-[1.03] transition-transform duration-300">{textos.hero_titulo_2 || "belleza natural"}</span>
               </h1>
-              <p className="text-[#4A3C3C] text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed mb-8">
+              <p className="text-[#2A1C1C] text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-medium leading-relaxed mb-8 drop-shadow-sm">
                 {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
-                <a href="#contacto" className="bg-[#B07D7D] text-white px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#8F6363] transition-all shadow-lg flex items-center gap-3">
+                <a href="#contacto" className="bg-[#B07D7D] text-white px-8 py-4 rounded-none font-medium tracking-widest uppercase text-sm hover:bg-[#8F6363] transition-all shadow-lg flex items-center gap-3">
                   Solicitar Presupuesto <ArrowRight size={16} />
                 </a>
-                <a href="#portfolio" className="text-[#B07D7D] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm border border-[#B07D7D] hover:bg-[#B07D7D]/5 transition-all">
+                <a href="#portfolio" className="text-[#B07D7D] bg-white/50 px-8 py-4 rounded-none font-medium tracking-widest uppercase text-sm border border-[#B07D7D] hover:bg-white transition-all backdrop-blur-sm">
                   Ver Trabajos
                 </a>
               </div>
@@ -274,169 +335,3 @@ export default function App() {
             <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
             <p className="text-[#4A3C3C]/60 font-light max-w-2xl mx-auto">
               {textos.portfolio_descripcion || "Un recorrido por mi visión del maquillaje. Arte, técnica y tendencias."}
-            </p>
-            <div className="w-12 h-[1px] bg-[#D9B3B3] mx-auto mt-6"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolioData.map((item, index) => (
-              item.Imagen_URL && (
-                <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 rounded-lg bg-white">
-                  <div className="aspect-[3/4] overflow-hidden bg-[#4A3C3C] flex items-center justify-center relative z-0">
-                    {renderMedia(item)}
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#332222]/90 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none z-10">
-                    <span className="text-[#D9B3B3] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
-                    <h3 className="text-white text-2xl font-serif">{item.Título}</h3>
-                  </div>
-                </div>
-              )
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6] relative z-10">
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
-            <p className="text-[#4A3C3C]/60 font-light max-w-2xl mx-auto">
-              {textos.servicios_descripcion || "Tratamientos y maquillajes adaptados a cada ocasión."}
-            </p>
-            <div className="w-12 h-[1px] bg-[#D9B3B3] mx-auto mt-6"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {servicesData.map((item, index) => (
-              item.Servicio && (
-                <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full rounded-lg relative overflow-hidden">
-                  
-                  {fondoBrochazos && (
-                    <img 
-                      src={fondoBrochazos} 
-                      alt="" 
-                      className="absolute -top-6 -right-6 w-40 pointer-events-none mix-blend-multiply transform rotate-45" 
-                      style={{
-                        maskImage: 'radial-gradient(circle at center, black 45%, transparent 75%)',
-                        WebkitMaskImage: 'radial-gradient(circle at center, black 45%, transparent 75%)'
-                      }}
-                    />
-                  )}
-
-                  <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors relative z-10">
-                    <Sparkles size={32} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-2xl font-serif text-[#4A3C3C] mb-4 relative z-10">{item.Servicio}</h3>
-                  <p className="text-[#4A3C3C]/70 font-light mb-8 leading-relaxed flex-grow relative z-10">{item['Descripción']}</p>
-                  <div className="pt-6 border-t border-[#F0E6E6] flex items-center justify-end mt-auto relative z-10">
-                    <a href="#contacto" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B07D7D] hover:text-[#8F6363] transition-colors flex items-center gap-2 group-hover:translate-x-1 duration-300">
-                      Consultar disponibilidad <ArrowRight size={14} />
-                    </a>
-                  </div>
-                </div>
-              )
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden z-10">
-        <div className="max-w-4xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-serif mb-6">{textos.contacto_titulo || "Ponte en contacto conmigo"}</h2>
-            <p className="text-white/80 font-light text-lg max-w-2xl mx-auto leading-relaxed">
-              {textos.contacto_descripcion || "Rellena este formulario con los detalles de tu evento y me pondré en contacto contigo lo antes posible."}
-            </p>
-          </div>
-
-          <form 
-            // AL QUITAR EL onSubmit Y PONER action/method FORZAMOS LA CONFIRMACIÓN EN FORMSUBMIT
-            action={`https://formsubmit.co/${correoDestino}`}
-            method="POST"
-            onChange={checkFormValidity}
-            className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/20 shadow-xl relative"
-          >
-            {/* CAMPOS OCULTOS PARA CONFIGURAR EL CORREO DE FORMSUBMIT */}
-            <input type="hidden" name="_subject" value="NUEVA SOLICITUD DE PRESUPUESTO - WEB" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_captcha" value="false" />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 relative z-10">
-              <div className="md:col-span-2">
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Nombre completo *</label>
-                <input type="text" name="Nombre" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu nombre" />
-              </div>
-
-              <div>
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Email *</label>
-                <input type="email" name="Email" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="tu@email.com" />
-              </div>
-
-              <div>
-                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Teléfono *</label>
-                <input type="tel" name="Teléfono" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu número de teléfono" />
-              </div>
-            </div>
-
-            <div className="mb-8 relative z-10">
-              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Tipo de servicio * (Puedes marcar varios)</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 bg-white/5 border border-white/10 rounded-lg">
-                {servicesData.map((item, index) => (
-                  item.Servicio && (
-                    <label key={index} className="flex items-center gap-3 cursor-pointer group">
-                      <input 
-                        type="checkbox" 
-                        name="Servicios solicitados" 
-                        value={item.Servicio} 
-                        className="w-4 h-4 accent-[#D9B3B3] cursor-pointer"
-                      />
-                      <span className="text-white/80 text-sm group-hover:text-white transition-colors">{item.Servicio}</span>
-                    </label>
-                  )
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-8 relative z-10">
-              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Fecha del evento (Si la tienes)</label>
-              <input type="date" name="Fecha" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors cursor-pointer" />
-            </div>
-
-            <div className="mb-10 relative z-10">
-              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Mensaje</label>
-              <textarea name="Mensaje" rows="4" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors resize-none" placeholder="Opcional: Cuéntame más detalles sobre el lugar, horarios, etc."></textarea>
-            </div>
-
-            <button 
-              type="submit" 
-              disabled={!isFormValid}
-              className={`w-full px-10 py-5 font-medium tracking-widest uppercase text-sm transition-all flex items-center justify-center gap-4 relative z-10 ${
-                isFormValid
-                  ? 'bg-white text-[#B07D7D] hover:bg-[#FFF9F9] cursor-pointer shadow-lg' 
-                  : 'bg-white/20 text-white/50 cursor-not-allowed'
-              }`}
-            >
-              {isFormValid ? "Enviar solicitud" : "Rellena los datos para enviar"} 
-              <ArrowRight size={18} />
-            </button>
-          </form>
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-white border-t border-white/20 pt-12 mt-16">
-            <a href={`mailto:${textos.email || "makeup_al3a@hotmail.com"}`} className="flex items-center gap-3 hover:text-[#F0E6E6] transition-colors tracking-wider font-light">
-              <Mail size={20} strokeWidth={1.5} />
-              {textos.email || "makeup_al3a@hotmail.com"}
-            </a>
-            <a href="tel:679665115" className="flex items-center gap-3 hover:text-[#F0E6E6] transition-colors tracking-wider font-light">
-              <Phone size={20} strokeWidth={1.5} />
-              679 66 51 15
-            </a>
-          </div>
-
-          <div className="mt-16 text-center text-xs tracking-widest uppercase text-white/50 relative z-10">
-            © {new Date().getFullYear()} {textos.nombre_marca || "Alba García Villarreal"}. Todos los derechos reservados.
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
