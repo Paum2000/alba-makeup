@@ -180,9 +180,23 @@ export default function App() {
     <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C] relative overflow-hidden">
 
       <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6]">
-        <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
+        
+        {/* POP DE COLOR EN LA NAVEGACIÓN (Extremo izquierdo) */}
+        {fondoBrochazos && (
+          <img 
+            src={fondoBrochazos} 
+            alt="" 
+            className="absolute top-1/2 left-0 w-40 md:w-48 transform -translate-y-1/2 -translate-x-1/4 pointer-events-none mix-blend-multiply opacity-80"
+            style={{
+              maskImage: 'radial-gradient(circle at center, black 30%, transparent 70%)',
+              WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 70%)'
+            }}
+          />
+        )}
+
+        <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between relative z-10">
           <a href="#inicio" className="flex items-center gap-3">
-            <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
+            <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase drop-shadow-sm">
               {textos.nombre_marca || "ALBA GARCIA"}
             </div>
           </a>
@@ -215,7 +229,6 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-6 pb-12 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-4 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6 relative">
             
-            {/* Aquí quitamos la reducción de opacidad y ajustamos la máscara */}
             {fondoBrochazos && (
               <img 
                 src={fondoBrochazos} 
@@ -236,7 +249,7 @@ export default function App() {
               />
             )}
             <div className="relative z-10">
-              <span className="text-[#4A3C3C] font-medium tracking-[0.3em] uppercase text-xs block mb-4">
+              <span className="text-[#B07D7D] font-medium tracking-[0.3em] uppercase text-xs block mb-4">
                 {textos.hero_subtitulo || "Make Up Artist"}
               </span>
               <h1 className="text-5xl lg:text-7xl font-serif text-[#4A3C3C] leading-tight mb-4">
@@ -351,7 +364,6 @@ export default function App() {
               item.Servicio && (
                 <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full rounded-lg relative overflow-hidden">
                   
-                  {/* Aquí también devolvemos la opacidad al 100% y mantenemos el fade en los bordes */}
                   {fondoBrochazos && (
                     <img 
                       src={fondoBrochazos} 
