@@ -120,7 +120,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* SOBRE MI SECTION (Ahora antes del portfolio) */}
+      {/* SOBRE MI SECTION */}
       <section id="sobre-mi" className="py-24 bg-white border-t border-[#EBDDD5]">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-serif text-[#59111E] mb-4">{textos.sobre_mi_titulo || "Sobre mí"}</h2>
@@ -134,7 +134,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Portfolio Section */}
+      {/* Portfolio Section (CORREGIDO PARA VÍDEOS) */}
       <section id="portfolio" className="py-24 bg-[#F9F6F0] border-t border-[#EBDDD5]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -150,13 +150,34 @@ export default function App() {
               item.Imagen_URL && (
                 <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
                   <div className="aspect-[3/4] overflow-hidden bg-white">
-                    <img 
-                      src={getDirectDriveUrl(item.Imagen_URL)} 
-                      alt={item.Título} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                    {/* Aquí está la lógica de los vídeos añadida */}
+                    {item.Tipo && item.Tipo.trim().toLowerCase() === 'video' ? (
+                      item.Imagen_URL.includes('youtube.com') || item.Imagen_URL.includes('youtu.be') ? (
+                        <iframe 
+                          src={`https://www.youtube.com/embed/${item.Imagen_URL.split('/').pop().replace('watch?v=', '')}?autoplay=1&mute=1&loop=1&controls=0`}
+                          className="w-full h-full object-cover"
+                          allow="autoplay; encrypted-media"
+                          allowFullScreen
+                        ></iframe>
+                      ) : (
+                        <video 
+                          src={item.Imagen_URL} 
+                          className="w-full h-full object-cover"
+                          autoPlay 
+                          muted 
+                          loop 
+                          playsInline
+                        ></video>
+                      )
+                    ) : (
+                      <img 
+                        src={getDirectDriveUrl(item.Imagen_URL)} 
+                        alt={item.Título} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    )}
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E16]/90 via-[#2C1E16]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8 pointer-events-none">
                     <span className="text-[#B98370] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
                     <h3 className="text-[#F9F6F0] text-2xl font-serif">{item.Título}</h3>
                   </div>
