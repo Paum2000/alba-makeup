@@ -148,7 +148,6 @@ export default function App() {
       <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/95 backdrop-blur-md border-b border-[#F0E6E6]">
         <div className="max-w-6xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           <a href="#inicio" className="flex items-center gap-3">
-            {/* SOLUCIÓN LOGO: Restauramos el texto en la barra de navegación */}
             <div className="text-lg md:text-xl font-serif text-[#B07D7D] font-light tracking-[0.15em] uppercase">
               {textos.nombre_marca || "ALBA MAKEUP"}
             </div>
@@ -179,16 +178,17 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="pt-32 md:pt-40 lg:pt-0 lg:min-h-screen flex items-center relative overflow-hidden z-10">
+      {/* SOLUCIÓN AL CORTE DEL LOGO: Añadido pt-32 y lg:pt-40 para empujar el contenido hacia abajo, debajo del menú flotante */}
+      <section id="inicio" className="pt-32 md:pt-40 lg:pt-40 lg:min-h-screen flex items-center relative overflow-hidden z-10">
         
         {/* Manchas de acuarela */}
         <div className="absolute top-1/4 right-0 w-[40rem] h-[40rem] bg-gradient-to-tr from-[#F2D1C9] via-[#D3E5E1] to-[#E3C6D3] rounded-full opacity-[0.25] blur-3xl pointer-events-none -mr-40 -mt-40"></div>
         <div className="absolute -bottom-20 -left-20 w-[30rem] h-[30rem] bg-gradient-to-tr from-[#EAD9D5] to-[#E3D3C3] rounded-full opacity-[0.2] blur-2xl pointer-events-none"></div>
 
-        <div className="max-w-6xl mx-auto px-6 py-12 lg:py-0 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-10 lg:mt-0">
+        <div className="max-w-6xl mx-auto px-6 pb-12 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-4 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6">
             
-            {/* NUEVA UBICACIÓN DEL LOGO: En grande dentro de la sección inicial con mix-blend para quitar su fondo */}
+            {/* LOGO en grande */}
             {textos.logo && (
               <img 
                 src={getDirectDriveUrl(textos.logo)} 
