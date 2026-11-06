@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Mail, ArrowRight, Sparkles } from 'lucide-react';
+import { Menu, X, Mail, ArrowRight, Sparkles, Phone } from 'lucide-react';
 import Papa from 'papaparse';
 
 // Truco de la miniatura para evitar el bloqueo de imágenes de Drive
@@ -28,7 +28,6 @@ function renderMedia(item) {
     );
   }
 
-  // 1. Si es un vídeo de YouTube
   if (url.includes('youtube.com') || url.includes('youtu.be')) {
     let ytId = '';
     if (url.includes('youtu.be/')) ytId = url.split('youtu.be/')[1]?.split('?')[0];
@@ -44,7 +43,6 @@ function renderMedia(item) {
     );
   }
 
-  // 2. Si es un vídeo de Drive (se mostrará el reproductor nativo de Drive)
   if (url.includes('drive.google.com')) {
     const idMatch = url.match(/\/d\/(.*?)\//) || url.match(/id=(.*?)(&|$)/);
     if (idMatch && idMatch[1]) {
@@ -58,7 +56,6 @@ function renderMedia(item) {
     }
   }
 
-  // 3. Si es un vídeo directo (.mp4)
   return (
     <video 
       src={url} 
@@ -109,66 +106,66 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F9F6F0] font-sans text-[#2C1E16]">
+    <div className="min-h-screen bg-[#FFF9F9] font-sans text-[#4A3C3C]">
       {/* Header / Navbar */}
-      <header className="fixed w-full top-0 z-50 bg-[#F9F6F0]/90 backdrop-blur-md border-b border-[#EBDDD5]">
+      <header className="fixed w-full top-0 z-50 bg-[#FFF9F9]/90 backdrop-blur-md border-b border-[#F0E6E6]">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="text-2xl font-serif text-[#59111E] font-light tracking-[0.2em] uppercase">
-            {textos.nombre_marca || "ALBA MAKEUP"}
+          <div className="text-xl md:text-2xl font-serif text-[#B07D7D] font-light tracking-[0.2em] uppercase">
+            {textos.nombre_marca || "ALBA GARCÍA VILLARREAL"}
           </div>
           
           <nav className="hidden md:flex space-x-10">
-            <a href="#inicio" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Inicio</a>
-            <a href="#sobre-mi" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Sobre mí</a>
-            <a href="#portfolio" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Portfolio</a>
-            <a href="#servicios" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Servicios</a>
-            <a href="#contacto" className="text-sm tracking-widest uppercase text-[#2C1E16] hover:text-[#B98370] transition-colors">Contacto</a>
+            <a href="#inicio" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Inicio</a>
+            <a href="#sobre-mi" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Sobre mí</a>
+            <a href="#portfolio" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Portfolio</a>
+            <a href="#servicios" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Servicios</a>
+            <a href="#contacto" className="text-sm tracking-widest uppercase text-[#4A3C3C] hover:text-[#D9B3B3] transition-colors">Contacto</a>
           </nav>
 
-          <button className="md:hidden text-[#59111E]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="md:hidden text-[#B07D7D]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
         {isMenuOpen && (
-          <nav className="md:hidden bg-[#F9F6F0] border-t border-[#EBDDD5] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full">
-            <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Inicio</a>
-            <a href="#sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Sobre mí</a>
-            <a href="#portfolio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Portfolio</a>
-            <a href="#servicios" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Servicios</a>
-            <a href="#contacto" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#2C1E16]">Contacto</a>
+          <nav className="md:hidden bg-[#FFF9F9] border-t border-[#F0E6E6] px-6 py-6 flex flex-col space-y-6 shadow-xl absolute w-full">
+            <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Inicio</a>
+            <a href="#sobre-mi" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Sobre mí</a>
+            <a href="#portfolio" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Portfolio</a>
+            <a href="#servicios" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Servicios</a>
+            <a href="#contacto" onClick={() => setIsMenuOpen(false)} className="text-sm tracking-widest uppercase text-[#4A3C3C]">Contacto</a>
           </nav>
         )}
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="pt-32 lg:pt-0 lg:min-h-screen flex items-center bg-[#F9F6F0] relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#EBDDD5] opacity-60 blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#DBC2B9] opacity-40 blur-3xl pointer-events-none"></div>
+      <section id="inicio" className="pt-32 lg:pt-0 lg:min-h-screen flex items-center bg-[#FFF9F9] relative overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#F5E6E6] opacity-60 blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-[#E8F0EE] opacity-40 blur-3xl pointer-events-none"></div>
         
         <div className="max-w-6xl mx-auto px-6 py-12 lg:py-0 w-full flex flex-col-reverse lg:flex-row items-center gap-12 relative z-10 mt-10 lg:mt-0">
           <div className="flex-1 text-center lg:text-left space-y-6">
-            <span className="text-[#B98370] font-medium tracking-[0.3em] uppercase text-xs">
-              {textos.hero_subtitulo || "Maquilladora Profesional"}
+            <span className="text-[#D9B3B3] font-medium tracking-[0.3em] uppercase text-xs">
+              {textos.hero_subtitulo || "Make Up Artist"}
             </span>
-            <h1 className="text-5xl lg:text-7xl font-serif text-[#2C1E16] leading-tight">
+            <h1 className="text-5xl lg:text-7xl font-serif text-[#4A3C3C] leading-tight">
               {textos.hero_titulo_1 || "Realza tu"} <br/>
-              <span className="text-[#59111E] italic pr-4">{textos.hero_titulo_2 || "belleza natural"}</span>
+              <span className="text-[#B07D7D] italic pr-4">{textos.hero_titulo_2 || "belleza natural"}</span>
             </h1>
-            <p className="text-[#2C1E16]/70 text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
+            <p className="text-[#4A3C3C]/70 text-lg md:text-xl max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
               {textos.hero_descripcion || "Maquillaje personalizado para novias, invitadas y eventos especiales."}
             </p>
             <div className="pt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="bg-[#59111E] text-[#F9F6F0] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#3D0C15] transition-all shadow-lg flex items-center gap-3">
+              <a href="#contacto" className="bg-[#B07D7D] text-white px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#8F6363] transition-all shadow-lg flex items-center gap-3">
                 Solicitar Presupuesto <ArrowRight size={16} />
               </a>
-              <a href="#portfolio" className="text-[#59111E] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm border border-[#59111E] hover:bg-[#59111E]/5 transition-all">
+              <a href="#portfolio" className="text-[#B07D7D] px-8 py-4 rounded-none font-light tracking-widest uppercase text-sm border border-[#B07D7D] hover:bg-[#B07D7D]/5 transition-all">
                 Ver Trabajos
               </a>
             </div>
           </div>
           <div className="flex-1 w-full max-w-md lg:max-w-lg mx-auto relative pt-4 lg:pt-0">
-            <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#DBC2B9] shadow-2xl z-10 p-3 bg-white">
+            <div className="relative w-full h-[500px] lg:h-[700px] overflow-hidden border border-[#F0E6E6] shadow-2xl z-10 p-3 bg-white">
               <img 
                 src={getDirectDriveUrl(textos.imagen_principal) || "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800"} 
                 alt="Alba trabajando" 
@@ -179,14 +176,12 @@ export default function App() {
         </div>
       </section>
 
-      {/* SOBRE MI SECTION REDISEÑADO */}
-      <section id="sobre-mi" className="py-24 bg-white border-t border-[#EBDDD5]">
+      {/* SOBRE MI SECTION */}
+      <section id="sobre-mi" className="py-24 bg-white border-t border-[#F0E6E6]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
-            
-            {/* Foto de la izquierda */}
             <div className="w-full lg:w-5/12">
-              <div className="aspect-[4/5] relative overflow-hidden shadow-2xl border border-[#EBDDD5] p-3 bg-[#F9F6F0]">
+              <div className="aspect-[4/5] relative overflow-hidden shadow-2xl border border-[#F0E6E6] p-3 bg-[#FFF9F9]">
                 <img 
                   src={getDirectDriveUrl(textos.imagen_sobre_mi) || "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&q=80&w=800"} 
                   alt="Alba maquillando" 
@@ -194,27 +189,21 @@ export default function App() {
                 />
               </div>
             </div>
-
-            {/* Textos de la derecha */}
             <div className="w-full lg:w-7/12 flex flex-col justify-center text-center lg:text-left">
-              <h2 className="text-5xl md:text-6xl font-serif text-[#59111E] mb-6 italic">
+              <h2 className="text-5xl md:text-6xl font-serif text-[#B07D7D] mb-6 italic">
                 {textos.sobre_mi_titulo || "Sobre mí"}
               </h2>
-              
-              <h3 className="text-xl md:text-2xl font-serif text-[#2C1E16] mb-8 leading-relaxed tracking-wide uppercase">
+              <h3 className="text-xl md:text-2xl font-serif text-[#4A3C3C] mb-8 leading-relaxed tracking-wide uppercase">
                 {textos.sobre_mi_destacado || "Más de 15 años dedicada al mundo de la belleza, el maquillaje y el asesoramiento personalizado."}
               </h3>
-              
-              <div className="w-12 h-[1px] bg-[#B98370] mx-auto lg:mx-0 mb-8"></div>
-              
-              <div className="text-[#2C1E16]/80 font-light text-base md:text-lg leading-relaxed whitespace-pre-line space-y-6">
+              <div className="w-12 h-[1px] bg-[#D9B3B3] mx-auto lg:mx-0 mb-8"></div>
+              <div className="text-[#4A3C3C]/80 font-light text-base md:text-lg leading-relaxed whitespace-pre-line space-y-6">
                 <p>
-                  {textos.sobre_mi_texto || "Desde 2011, mi pasión por el maquillaje me ha llevado a formarme, crecer y trabajar en distintas áreas del sector, siempre con un mismo objetivo: potenciar la belleza real de cada persona.\n\nA lo largo de mi trayectoria he formado parte de grandes firmas como Sephora, Benefit Cosmetics (donde me especialicé como Brow Expert en diseño y cuidado de cejas) y L'Oréal Professionnel, experiencias que han enriquecido mi técnica, mi visión de la belleza y mi asesoramiento profesional.\n\nActualmente, soy Makeup Artist para Charlotte Tilbury, una firma con la que comparto la pasión por un maquillaje sofisticado, favorecedor y con un enfoque real de la belleza."}
+                  {textos.sobre_mi_texto || "Desde 2011, mi pasión por el maquillaje me ha llevado a formarme, crecer y trabajar en distintas áreas del sector, siempre con un mismo objetivo: potenciar la belleza real de cada persona.\n\nA lo largo de mi trayectoria he formado parte de grandes firmas como Sephora, Benefit Cosmetics y L'Oréal Professionnel. Actualmente, soy Makeup Artist para Charlotte Tilbury, compartiendo la pasión por un maquillaje sofisticado, favorecedor y real."}
                 </p>
               </div>
-
-              <div className="pt-10 mt-10 border-t border-[#EBDDD5]">
-                <p className="text-[#59111E] font-serif text-2xl italic">
+              <div className="pt-10 mt-10 border-t border-[#F0E6E6]">
+                <p className="text-[#B07D7D] font-serif text-2xl italic">
                   "{textos.sobre_mi_cita || "Mi trabajo es escuchar, asesorar y crear maquillajes que te hagan sentir tú, pero en tu mejor versión."}"
                 </p>
               </div>
@@ -224,26 +213,26 @@ export default function App() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-24 bg-[#F9F6F0] border-t border-[#EBDDD5]">
+      <section id="portfolio" className="py-24 bg-[#FFF9F9] border-t border-[#F0E6E6]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif text-[#59111E] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
-            <p className="text-[#2C1E16]/60 font-light max-w-2xl mx-auto">
+            <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.portfolio_titulo || "Portfolio"}</h2>
+            <p className="text-[#4A3C3C]/60 font-light max-w-2xl mx-auto">
               {textos.portfolio_descripcion || "Un recorrido por mi visión del maquillaje. Arte, técnica y tendencias."}
             </p>
-            <div className="w-12 h-[1px] bg-[#B98370] mx-auto mt-6"></div>
+            <div className="w-12 h-[1px] bg-[#D9B3B3] mx-auto mt-6"></div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {portfolioData.map((item, index) => (
               item.Imagen_URL && (
                 <div key={index} className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
-                  <div className="aspect-[3/4] overflow-hidden bg-[#2C1E16] flex items-center justify-center relative z-0">
+                  <div className="aspect-[3/4] overflow-hidden bg-[#4A3C3C] flex items-center justify-center relative z-0">
                     {renderMedia(item)}
                   </div>
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2C1E16]/90 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none z-10">
-                    <span className="text-[#B98370] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
-                    <h3 className="text-[#F9F6F0] text-2xl font-serif">{item.Título}</h3>
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#332222]/90 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8 pointer-events-none z-10">
+                    <span className="text-[#D9B3B3] text-xs font-medium tracking-[0.2em] uppercase mb-2">{item.Categoría}</span>
+                    <h3 className="text-white text-2xl font-serif">{item.Título}</h3>
                   </div>
                 </div>
               )
@@ -252,30 +241,29 @@ export default function App() {
         </div>
       </section>
 
-      {/* Servicios Section (REVISADO: SIN PRECIOS) */}
-      <section id="servicios" className="py-24 bg-white border-t border-[#EBDDD5]">
+      {/* Servicios Section */}
+      <section id="servicios" className="py-24 bg-white border-t border-[#F0E6E6]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif text-[#59111E] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
-            <p className="text-[#2C1E16]/60 font-light max-w-2xl mx-auto">
+            <h2 className="text-4xl font-serif text-[#B07D7D] mb-4">{textos.servicios_titulo || "Servicios"}</h2>
+            <p className="text-[#4A3C3C]/60 font-light max-w-2xl mx-auto">
               {textos.servicios_descripcion || "Tratamientos y maquillajes adaptados a cada ocasión."}
             </p>
-            <div className="w-12 h-[1px] bg-[#B98370] mx-auto mt-6"></div>
+            <div className="w-12 h-[1px] bg-[#D9B3B3] mx-auto mt-6"></div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {servicesData.map((item, index) => (
               item.Servicio && (
-                <div key={index} className="bg-[#F9F6F0] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#EBDDD5] group flex flex-col h-full">
-                  <div className="w-12 h-12 mb-8 text-[#B98370] group-hover:text-[#59111E] transition-colors">
+                <div key={index} className="bg-[#FFF9F9] p-10 shadow-sm hover:shadow-xl transition-shadow border border-[#F0E6E6] group flex flex-col h-full">
+                  <div className="w-12 h-12 mb-8 text-[#D9B3B3] group-hover:text-[#B07D7D] transition-colors">
                     <Sparkles size={32} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-2xl font-serif text-[#2C1E16] mb-4">{item.Servicio}</h3>
-                  <p className="text-[#2C1E16]/70 font-light mb-8 leading-relaxed flex-grow">{item['Descripción']}</p>
+                  <h3 className="text-2xl font-serif text-[#4A3C3C] mb-4">{item.Servicio}</h3>
+                  <p className="text-[#4A3C3C]/70 font-light mb-8 leading-relaxed flex-grow">{item['Descripción']}</p>
                   
-                  {/* AQUÍ EL CAMBIO: Botón alargado de consultar disponibilidad */}
-                  <div className="pt-6 border-t border-[#EBDDD5] flex items-center justify-end mt-auto">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B98370] hover:text-[#59111E] transition-colors flex items-center gap-2">
+                  <div className="pt-6 border-t border-[#F0E6E6] flex items-center justify-end mt-auto">
+                    <a href="#contacto" className="text-xs tracking-[0.2em] uppercase font-medium text-[#B07D7D] hover:text-[#8F6363] transition-colors flex items-center gap-2">
                       Consultar disponibilidad <ArrowRight size={14} />
                     </a>
                   </div>
@@ -286,31 +274,72 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contacto Section */}
-      <section id="contacto" className="bg-[#59111E] text-[#F9F6F0] py-32 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#B98370] opacity-10 blur-[100px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#B98370] opacity-10 blur-[100px] pointer-events-none"></div>
+      {/* Contacto Section con Formulario Integrado */}
+      <section id="contacto" className="bg-[#B07D7D] text-white py-32 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#D9B3B3] opacity-20 blur-[100px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D9B3B3] opacity-20 blur-[100px] pointer-events-none"></div>
 
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-4xl lg:text-5xl font-serif mb-8">{textos.contacto_titulo || "¿Lista para brillar?"}</h2>
-          <p className="text-[#F9F6F0]/70 font-light text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-            {textos.contacto_descripcion || "Cuéntame qué necesitas, la fecha de tu evento y dónde te encuentras. Te responderé lo antes posible con un presupuesto personalizado y disponibilidad."}
-          </p>
+        <div className="max-w-4xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-serif mb-6">{textos.contacto_titulo || "Ponte en contacto conmigo"}</h2>
+            <p className="text-white/80 font-light text-lg max-w-2xl mx-auto leading-relaxed">
+              {textos.contacto_descripcion || "Rellena este formulario con los detalles de tu evento y me pondré en contacto contigo lo antes posible."}
+            </p>
+          </div>
           
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe7w-klVaF5StWbIifFVelzk85DqADwc0H1VVvtxxn7OlD94g/viewform" target="_blank" rel="noopener noreferrer" className="bg-[#F9F6F0] text-[#59111E] px-10 py-5 rounded-none font-light tracking-widest uppercase text-sm hover:bg-[#B98370] hover:text-white transition-all shadow-xl inline-flex items-center gap-4 mb-20">
-            {textos.boton_formulario || "Rellenar Formulario de Reserva"}
-            <ArrowRight size={18} />
-          </a>
+          {/* FORMULARIO DE CONTACTO */}
+          {/* El action envía los datos a FormSubmit, y de ahí al correo de Alba */}
+          <form 
+            action={`https://formsubmit.co/${textos.email || "makeup_al3a@hotmail.com"}`} 
+            method="POST" 
+            className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/20 shadow-xl"
+          >
+            {/* Configuración oculta para FormSubmit */}
+            <input type="hidden" name="_subject" value="¡Nueva solicitud de reserva desde tu web!" />
+            <input type="hidden" name="_template" value="table" />
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-[#B98370] border-t border-[#F9F6F0]/10 pt-12">
-            <a href={`mailto:${textos.email || "hola@albamakeup.com"}`} className="flex items-center gap-3 hover:text-[#F9F6F0] transition-colors tracking-wider font-light">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Nombre completo</label>
+                <input type="text" name="Nombre" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu nombre" />
+              </div>
+              <div>
+                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Teléfono</label>
+                <input type="tel" name="Teléfono" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="Tu teléfono" />
+              </div>
+              <div>
+                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Email</label>
+                <input type="email" name="Email" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" placeholder="tu@email.com" />
+              </div>
+              <div>
+                <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Fecha del evento</label>
+                <input type="date" name="Fecha" className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors" />
+              </div>
+            </div>
+            
+            <div className="mb-10">
+              <label className="block text-white/80 text-xs tracking-widest uppercase mb-3">Cuéntame más sobre lo que necesitas (Lugar, tipo de evento...)</label>
+              <textarea name="Mensaje" rows="4" required className="w-full bg-transparent border-b border-white/40 text-white py-2 focus:outline-none focus:border-white transition-colors resize-none" placeholder="Hola Alba, me gustaría pedirte presupuesto para..."></textarea>
+            </div>
+
+            <button type="submit" className="w-full bg-white text-[#B07D7D] px-10 py-5 font-medium tracking-widest uppercase text-sm hover:bg-[#FFF9F9] transition-all flex items-center justify-center gap-4">
+              Enviar solicitud <ArrowRight size={18} />
+            </button>
+          </form>
+
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-white border-t border-white/20 pt-12 mt-16">
+            <a href={`mailto:${textos.email || "makeup_al3a@hotmail.com"}`} className="flex items-center gap-3 hover:text-[#F0E6E6] transition-colors tracking-wider font-light">
               <Mail size={20} strokeWidth={1.5} />
-              {textos.email || "hola@albamakeup.com"}
+              {textos.email || "makeup_al3a@hotmail.com"}
+            </a>
+            <a href="tel:679665115" className="flex items-center gap-3 hover:text-[#F0E6E6] transition-colors tracking-wider font-light">
+              <Phone size={20} strokeWidth={1.5} />
+              679 66 51 15
             </a>
           </div>
           
-          <div className="mt-16 text-xs tracking-widest uppercase text-[#F9F6F0]/40">
-            © {new Date().getFullYear()} {textos.nombre_marca || "Alba Makeup"}. Todos los derechos reservados.
+          <div className="mt-16 text-center text-xs tracking-widest uppercase text-white/50">
+            © {new Date().getFullYear()} {textos.nombre_marca || "Alba García Villarreal"}. Todos los derechos reservados.
           </div>
         </div>
       </section>
